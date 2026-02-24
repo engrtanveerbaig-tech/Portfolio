@@ -30,17 +30,22 @@ position:relative;
 
 .navbar{
 position:fixed;
-top:25px;
-left:40px;
-z-index:1000;
+top:20px;
+left:0;
+width:100%;
+padding:0 20px;
 display:flex;
-gap:25px;
+justify-content:flex-start;
+gap:20px;
+z-index:1000;
 }
+
 
 .navbar a{
 color:rgba(255,255,255,0.75);
 text-decoration:none;
-font-size:14px;
+font-size:25px;
+padding-left: 10px;
 font-weight:500;
 position:relative;
 transition:0.3s ease;
@@ -90,8 +95,8 @@ max-width:320px;
 }
 
 .hero h1{
-font-size:42px;
-font-weight:800;
+font-size:65px;
+font-weight:900;
 }
 
 .hero-buttons{
@@ -122,7 +127,7 @@ margin-top:40px;
 .social-icons a{
 color:#aaa;
 margin-right:18px;
-font-size:15px;
+font-size:35px;
 transition:0.3s;
 }
 
@@ -267,14 +272,42 @@ transform:translateY(0);
 padding:120px 20px 60px;
 }
 
+
 .navbar{
-left:20px;
-gap:18px;
+top:15px;
+padding:0 16px;
+gap:14px;
 }
 
 .navbar a{
-font-size:12px;
+font-size:13px;
 }
+.hero h1{
+font-size:63px;
+color:#fff;
+}
+
+.hero h2{
+font-weight: 600;
+font-size:40px;
+color:#fff;
+}
+
+.hero p{
+font-size:14px;
+}
+.hero-buttons a{
+display:inline-block;
+margin-right:12px;
+padding:9px 20px;
+border:1px solid #fff;
+border-radius:25px;
+color:#fff;
+text-decoration:none;
+font-size:13px;
+transition:0.3s;
+}
+
 
 .about{
 height:100vh;
