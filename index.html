@@ -2,257 +2,873 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tanveer Ahmad | Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tanveer Ahmad — Document Controller | Software Engineer</title>
+<meta name="description" content="Portfolio dossier of Tanveer Ahmad, Document Controller (Subcontractor Invoicing, Systems & HR) & Software Engineer, Jeddah, Saudi Arabia.">
 
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#efe7d3;
+    --paper-shade:#e3d6b6;
+    --paper-deep:#d0bf90;
+    --ink:#221c14;
+    --ink-soft:#5c5344;
+    --navy:#16324e;
+    --navy-soft:#2c4a66;
+    --kraft:#b9873f;
+    --kraft-dark:#8f6829;
+    --stamp:#a73a2e;
+    --approved:#3f6c4e;
+    --gold:#c79a4b;
+    --radius:8px;
+    --ease:cubic-bezier(.5,.05,.15,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100dvh;
+    background:
+      radial-gradient(circle at 18% 8%, #1c3a59 0%, #102439 55%, #070f18 100%);
+    font-family:'IBM Plex Sans', sans-serif;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* ---------- ambient backdrop: three generated "images" (no external stock photos, fully vector/procedural) ---------- */
+  .grid-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
+    background-size:34px 34px;
+    animation: drift 46s linear infinite;
+    opacity:.65;
+  }
+  @keyframes drift{
+    from{background-position:0 0, 0 0;}
+    to{background-position:340px 170px, 340px 170px;}
+  }
+  /* layer 2: soft drafting cross-hatch, like a rolled-out site plan behind the book */
+  .plan-bg{
+    position:fixed; inset:-10%; z-index:0; pointer-events:none; opacity:.16;
+    background-image: repeating-linear-gradient(115deg, transparent 0 26px, rgba(139,180,214,.5) 26px 27px);
+    mix-blend-mode:screen;
+    animation: driftplan 70s linear infinite;
+  }
+  @keyframes driftplan{
+    from{ transform:translate(0,0) rotate(0deg); }
+    to{ transform:translate(-4%,3%) rotate(1deg); }
+  }
+  /* layer 3: slow radial spotlight the pointer nudges, for depth */
+  .spot-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background: radial-gradient(480px circle at var(--mx,50%) var(--my,30%), rgba(199,154,75,.16), transparent 60%);
+    transition: background-position .2s ease;
+  }
+  /* floating dust motes for atmosphere */
+  .motes{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .motes span{
+    position:absolute; width:3px; height:3px; border-radius:50%;
+    background:rgba(216,201,159,.55); bottom:-10px;
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    from{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:.8; }
+    90%{ opacity:.5; }
+    to{ transform:translateY(-110vh) translateX(20px); opacity:0; }
+  }
+
+  .rig{
+    position:relative;
+    z-index:1;
+    width:min(430px, 100vw);
+    height:min(100dvh, 932px);
+    display:flex;
+    align-items:stretch;
+  }
+
+  .book-wrap{
+    position:relative;
+    flex:1;
+    perspective:1900px;
+    filter:drop-shadow(0 24px 46px rgba(0,0,0,.5)) drop-shadow(0 2px 8px rgba(0,0,0,.35));
+  }
+
+  .book{
+    position:relative;
+    width:100%;
+    height:100%;
+    background:var(--paper);
+    overflow:hidden;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+
+  /* paper grain, procedural (SVG fractal noise) laid over the whole book */
+  .book::after{
+    content:"";
+    position:absolute; inset:0; z-index:6; pointer-events:none;
+    opacity:.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* torn perforation strip along the top, a document-control detail */
+  .book::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:10px; z-index:5;
+    background-image: radial-gradient(circle, rgba(0,0,0,.2) 1.6px, transparent 1.7px);
+    background-size:14px 14px;
+    background-position: 4px 4px;
+  }
+
+  .page{
+    position:absolute; inset:0;
+    padding:34px 22px 84px;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    transform-origin:left center;
+    transform:rotateY(-112deg);
+    opacity:0;
+    visibility:hidden;
+    transition: transform .72s var(--ease), opacity .4s ease, box-shadow .72s var(--ease);
+    background:var(--paper);
+    box-shadow:none;
+  }
+  .page.active{
+    transform:rotateY(0deg);
+    opacity:1;
+    visibility:visible;
+    z-index:2;
+    box-shadow: -22px 0 40px -20px rgba(0,0,0,.35) inset;
+  }
+  .page.exit-back{ transform:rotateY(112deg); }
+
+  @media (prefers-reduced-motion: reduce){
+    .page{ transition:opacity .3s ease; transform:none !important; }
+    .grid-bg,.plan-bg,.motes span{ animation:none !important; }
+  }
+
+  .page::-webkit-scrollbar{ width:0; }
+
+  /* reveal-on-scroll utility */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .55s var(--ease), transform .55s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* doc-id header row on every page */
+  .doc-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.62rem; letter-spacing:.06em;
+    color:var(--ink-soft);
+    border-bottom:1px dashed var(--paper-deep);
+    padding-bottom:8px; margin-bottom:18px;
+    text-transform:uppercase;
+  }
+  .doc-head .live{ display:inline-flex; align-items:center; gap:5px; }
+  .doc-head .live::before{
+    content:""; width:6px; height:6px; border-radius:50%; background:var(--approved);
+    box-shadow:0 0 0 0 rgba(63,108,78,.55); animation:pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(63,108,78,.5); }
+    70%{ box-shadow:0 0 0 7px rgba(63,108,78,0); }
+    100%{ box-shadow:0 0 0 0 rgba(63,108,78,0); }
+  }
+
+  h1,h2,h3,h4{ font-family:'Zilla Slab', serif; margin:0; color:var(--navy); }
+
+  /* rubber stamp mark */
+  .stamp{
+    position:absolute; top:46px; right:18px; z-index:4;
+    width:88px; height:88px;
+    border:3px solid var(--stamp);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    color:var(--stamp); mix-blend-mode:multiply;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600; font-size:.56rem; line-height:1.25;
+    letter-spacing:.03em; white-space:pre-line;
+    transform:rotate(-11deg) scale(0);
+    opacity:0;
+    pointer-events:none;
+  }
+  .stamp::before{
+    content:""; position:absolute; inset:5px; border:1px solid var(--stamp); border-radius:50%;
+  }
+  .stamp.pop{ animation: thunk .55s var(--ease-spring) forwards; }
+  @keyframes thunk{
+    0%{ transform:rotate(-15deg) scale(1.9); opacity:0; }
+    50%{ transform:rotate(-9deg) scale(.9); opacity:.9; }
+    100%{ transform:rotate(-11deg) scale(1); opacity:.85; }
+  }
+
+  /* ---------- COVER ---------- */
+  .badge-wrap{ display:flex; justify-content:center; margin-top:4px; perspective:600px; }
+  .badge{
+    width:118px; height:118px; border-radius:50%;
+    padding:5px;
+    background: conic-gradient(from 0deg, var(--gold), var(--kraft-dark), var(--gold));
+    position:relative;
+    box-shadow: 0 14px 30px -10px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.05);
+    animation: spinring 9s linear infinite;
+    transition: transform .25s var(--ease);
+    transform-style:preserve-3d;
+    cursor:pointer;
+  }
+  @keyframes spinring{ to{ background-position:200% 0; } }
+  .badge img{
+    width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;
+    background:var(--paper-shade);
+    box-shadow: inset 0 0 0 3px var(--paper);
+  }
+  .badge span.cap{
+    position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);
+    font-family:'IBM Plex Mono', monospace; font-size:.55rem; letter-spacing:.12em;
+    color:var(--ink-soft); white-space:nowrap; text-transform:uppercase;
+  }
+  .cover-center{ text-align:center; margin-top:10px; }
+  .cover-center h1{
+    font-size:1.9rem; margin-top:34px;
+    opacity:0; transform:translateY(10px);
+    animation: rise-in .6s var(--ease) .15s forwards;
+  }
+  .cover-center h3{
+    font-family:'IBM Plex Sans', sans-serif; font-weight:500; font-size:.92rem;
+    color:var(--ink-soft); margin-top:6px;
+    opacity:0; transform:translateY(10px);
+    animation: rise-in .6s var(--ease) .28s forwards;
+  }
+  @keyframes rise-in{ to{ opacity:1; transform:translateY(0); } }
+
+  .tagline{
+    font-size:.88rem; line-height:1.55; color:var(--ink); margin:18px auto 0; max-width:33ch;
+    min-height:3.2em;
+    border-right:2px solid transparent;
+  }
+  .tagline.typing{ border-right-color:var(--stamp); animation:blink 1s step-end infinite; }
+  @keyframes blink{ 50%{ border-color:transparent; } }
+
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:20px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:.62rem; letter-spacing:.03em;
+    background:var(--navy); color:var(--paper); padding:5px 10px; border-radius:20px;
+    box-shadow:0 4px 10px -4px rgba(22,50,78,.6);
+    opacity:0; transform:translateY(8px) scale(.9);
+    animation: rise-in .45s var(--ease-spring) forwards;
+  }
+  .chip:nth-child(1){ animation-delay:.5s; }
+  .chip:nth-child(2){ animation-delay:.6s; }
+  .chip:nth-child(3){ animation-delay:.7s; }
+  .chip:nth-child(4){ animation-delay:.8s; }
+
+  .btn-row{ display:flex; gap:10px; justify-content:center; margin-top:26px; flex-wrap:wrap; }
+  .btn{
+    font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:.82rem;
+    padding:11px 16px; border-radius:var(--radius); text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px; cursor:pointer; border:none;
+    position:relative; overflow:hidden;
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+  }
+  .btn:active{ transform:scale(.95); }
+  .btn:focus-visible{ outline:3px solid var(--stamp); outline-offset:2px; }
+  .btn-primary{ background:var(--stamp); color:#fff; box-shadow:0 10px 22px -10px rgba(167,58,46,.8); }
+  .btn-primary:hover{ box-shadow:0 14px 26px -8px rgba(167,58,46,.9); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
+  .btn-ghost:hover{ background:rgba(22,50,78,.06); transform:translateY(-2px); }
+  .btn .ripple{
+    position:absolute; border-radius:50%; background:rgba(255,255,255,.55);
+    transform:scale(0); animation:rip .55s ease-out forwards; pointer-events:none;
+  }
+  @keyframes rip{ to{ transform:scale(3); opacity:0; } }
+
+  .hint{
+    text-align:center; font-family:'IBM Plex Mono', monospace; font-size:.62rem;
+    color:var(--ink-soft); margin-top:30px; letter-spacing:.03em;
+    opacity:0; animation: rise-in .5s var(--ease) 1s forwards;
+  }
+  .hint i{ vertical-align:middle; animation:nudge 1.6s ease-in-out infinite; display:inline-block; }
+  @keyframes nudge{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(4px); } }
+
+  /* ---------- PROFILE ---------- */
+  .summary{ font-size:.88rem; line-height:1.65; }
+  .subhead{ font-family:'IBM Plex Mono', monospace; font-size:.66rem; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--kraft-dark); margin:22px 0 10px; border-bottom:1px solid var(--paper-deep); padding-bottom:5px;}
+  .now-card{
+    background:var(--paper-shade); border-left:3px solid var(--navy); padding:11px 12px; border-radius:4px;
+    font-size:.82rem; box-shadow:0 6px 16px -10px rgba(0,0,0,.35);
+    position:relative; overflow:hidden;
+  }
+  .now-card::after{
+    content:""; position:absolute; inset:0; background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%);
+    background-size:220% 100%; background-position:130% 0; animation:sheen 5s ease-in-out infinite;
+  }
+  @keyframes sheen{ 0%,60%{ background-position:130% 0; } 100%{ background-position:-30% 0; } }
+  .now-card b{ display:block; font-family:'Zilla Slab', serif; font-size:.98rem; color:var(--navy); margin-bottom:2px;}
+  ul.tick{ list-style:none; padding:0; margin:0; }
+  ul.tick li{ font-size:.83rem; padding-left:24px; position:relative; margin-bottom:9px; line-height:1.4; }
+  ul.tick li::before{
+    content:"✔"; position:absolute; left:0; top:0; color:var(--approved); font-weight:700;
+  }
+  .lang-row{ display:flex; gap:14px; margin-top:6px; flex-wrap:wrap; }
+  .lang-item{ font-size:.78rem; }
+  .lang-item b{ font-family:'IBM Plex Mono', monospace; color:var(--navy); }
+
+  /* ---------- EXPERIENCE ---------- */
+  .tl{ position:relative; padding-left:20px; margin-top:6px; }
+  .tl::before{ content:""; position:absolute; left:5px; top:4px; bottom:4px; width:2px;
+    background:linear-gradient(var(--paper-deep), var(--kraft), var(--paper-deep)); }
+  .tl-item{ position:relative; margin-bottom:26px; }
+  .tl-item::before{
+    content:""; position:absolute; left:-20px; top:4px; width:12px; height:12px; border-radius:50%;
+    background:var(--stamp); border:2px solid var(--paper); box-shadow:0 0 0 3px rgba(167,58,46,.18);
+    transition: box-shadow .3s ease;
+  }
+  .tl-item.in::before{ box-shadow:0 0 0 6px rgba(167,58,46,.12); }
+  .tl-tag{ font-family:'IBM Plex Mono', monospace; font-size:.64rem; color:var(--kraft-dark); letter-spacing:.03em; }
+  .tl-item h4{ font-size:1.02rem; margin:2px 0 6px; }
+  .tl-item p{ font-size:.8rem; margin:0 0 3px; line-height:1.5; color:var(--ink); }
+  .tl-item .now-pill{
+    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:.6rem; letter-spacing:.05em;
+    background:var(--approved); color:#fff; padding:2px 7px; border-radius:10px; margin-bottom:6px;
+  }
+
+  /* ---------- EDU / SKILLS ---------- */
+  .edu-card{ margin-bottom:10px; font-size:.82rem; }
+  .edu-card b{ font-family:'Zilla Slab', serif; color:var(--navy); font-size:.95rem; display:block; }
+  .edu-card span{ color:var(--ink-soft); font-size:.74rem; font-family:'IBM Plex Mono', monospace; }
+  .tags{ display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; }
+  .tag{
+    font-size:.68rem; font-family:'IBM Plex Mono', monospace; background:var(--paper-shade);
+    border:1px solid var(--paper-deep); padding:4px 8px; border-radius:4px; color:var(--ink);
+    transition: transform .18s var(--ease-spring), box-shadow .18s ease, background .18s ease;
+  }
+  .tag:hover{ transform:translateY(-3px); box-shadow:0 8px 14px -8px rgba(0,0,0,.35); background:#fff8e6; }
+
+  .meter{ margin-bottom:12px; }
+  .meter .lbl{ display:flex; justify-content:space-between; font-size:.72rem; margin-bottom:4px; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft); }
+  .meter .bar{ height:6px; border-radius:4px; background:var(--paper-shade); overflow:hidden; box-shadow:inset 0 1px 2px rgba(0,0,0,.15); }
+  .meter .fill{ height:100%; width:0; border-radius:4px; background:linear-gradient(90deg, var(--kraft-dark), var(--stamp)); transition:width 1.1s var(--ease) .1s; }
+  .meter.in .fill{ width:var(--pct); }
+
+  /* ---------- PROJECTS ---------- */
+  .proj{
+    border:1px solid var(--paper-deep); border-radius:6px; padding:14px 15px; margin-bottom:14px;
+    background:linear-gradient(180deg, rgba(255,255,255,.4), transparent);
+    box-shadow:0 8px 18px -14px rgba(0,0,0,.4);
+    transition: transform .22s var(--ease), box-shadow .22s ease;
+  }
+  .proj:hover{ transform:translateY(-4px); box-shadow:0 16px 26px -14px rgba(0,0,0,.45); }
+  .proj h4{ font-size:1rem; margin-bottom:6px; }
+  .proj p{ font-size:.8rem; line-height:1.5; margin:0 0 6px; color:var(--ink); }
+  .proj .tl-tag{ display:block; margin-bottom:4px; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-photo{ display:flex; justify-content:center; margin-bottom:16px; }
+  .contact-photo img{
+    width:64px; height:64px; border-radius:50%; object-fit:cover;
+    border:2px solid var(--paper); box-shadow:0 8px 18px -8px rgba(0,0,0,.45), 0 0 0 3px var(--kraft-dark);
+  }
+  .contact-list{ list-style:none; padding:0; margin:6px 0 0; }
+  .contact-list li{ margin-bottom:14px; }
+  .contact-list a{
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.86rem; font-weight:500; padding:8px 9px; margin:0 -9px; border-radius:6px;
+    transition: background .18s ease, transform .18s ease;
+  }
+  .contact-list a:hover{ background:rgba(22,50,78,.06); transform:translateX(3px); }
+  .contact-list i{ font-size:1.15rem; color:var(--navy); width:22px; text-align:center; }
+  .contact-note{ font-size:.72rem; color:var(--ink-soft); margin-top:2px; font-family:'IBM Plex Mono', monospace; }
+
+  /* ---------- TABS (binder dividers) ---------- */
+  .tabs{
+    position:absolute; top:64px; right:-32px; z-index:6;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .tab{
+    width:32px; padding:10px 0;
+    background:var(--kraft); color:#fff2dc;
+    border:none; border-radius:0 6px 6px 0;
+    font-family:'IBM Plex Mono', monospace; font-size:.6rem; letter-spacing:.08em;
+    writing-mode:vertical-rl; text-orientation:mixed;
+    cursor:pointer;
+    box-shadow:2px 2px 5px rgba(0,0,0,.25);
+    transition: transform .22s var(--ease-spring), background .2s ease, box-shadow .2s ease;
+  }
+  .tab:hover{ transform:translateX(-2px); box-shadow:3px 4px 9px rgba(0,0,0,.32); }
+  .tab.active{ background:var(--navy); transform:translateX(-4px); box-shadow:3px 4px 10px rgba(0,0,0,.35); }
+  .tab:focus-visible{ outline:2px solid var(--stamp); outline-offset:2px; }
+
+  /* ---------- bottom pager ---------- */
+  .pager{
+    position:absolute; left:0; right:0; bottom:0; z-index:6;
+    height:58px; background:var(--paper-shade); border-top:1px solid var(--paper-deep);
+    display:flex; align-items:center; justify-content:space-between; padding:0 16px;
+    box-shadow:0 -8px 16px -14px rgba(0,0,0,.4) inset;
+  }
+  .pager button{
+    background:none; border:none; font-size:1.3rem; color:var(--navy); cursor:pointer; padding:8px;
+    transition: transform .15s ease;
+  }
+  .pager button:hover:not(:disabled){ transform:scale(1.15); }
+  .pager button:disabled{ opacity:.25; cursor:default; }
+  .pager button:focus-visible{ outline:2px solid var(--stamp); border-radius:4px; }
+  .dots{ display:flex; gap:7px; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--paper-deep); transition:background .2s ease, transform .2s ease; }
+  .dot.on{ background:var(--stamp); transform:scale(1.4); }
+
+  /* ---------- QR modal ---------- */
+  .qr-modal{
+    position:fixed; inset:0; z-index:20; display:none; align-items:center; justify-content:center;
+    background:rgba(11,26,41,.72); backdrop-filter:blur(3px);
+  }
+  .qr-modal.open{ display:flex; animation:fadeIn .25s ease; }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  .qr-box{
+    background:var(--paper); padding:26px 28px 22px; border-radius:10px; text-align:center;
+    width:min(280px, 80vw); box-shadow:0 24px 60px rgba(0,0,0,.45);
+    transform:scale(.9); animation:pop .32s var(--ease-spring) forwards;
+  }
+  @keyframes pop{ to{ transform:scale(1); } }
+  .qr-box h3{ font-size:1rem; margin-bottom:14px; }
+  .qr-box img{ width:170px; height:170px; border-radius:4px; border:6px solid #fff; box-shadow:0 6px 16px rgba(0,0,0,.25); }
+  .qr-box p{ font-size:.68rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft); margin:12px 0 16px; }
+  .qr-box button{
+    background:var(--navy); color:#fff; border:none; padding:9px 18px; border-radius:5px;
+    font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:.78rem; cursor:pointer;
+    transition: transform .15s ease;
+  }
+  .qr-box button:hover{ transform:translateY(-2px); }
+
+  @media (min-width:431px){
+    .rig{ height:min(92dvh, 880px); }
+    .book-wrap{ border-radius:10px; overflow:visible; }
+    .book{ border-radius:10px; }
+  }
+</style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
-    <div class="nav-left">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#resume">Resume</a>
-        <a href="#projects">Recent Work</a>
-    </div>
-</div>
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="plan-bg" aria-hidden="true"></div>
+<div class="spot-bg" id="spotBg" aria-hidden="true"></div>
+<div class="motes" id="motes" aria-hidden="true"></div>
 
-<!-- PANEL 1 -->
-<section id="home" class="panel hero">
-    <div class="hero-content">
-        <h2>TANVEER</h2>
-        <h1>AHMAD</h1>
-        <p>Site Document Controller</p>
+<div class="rig">
+  <div class="book-wrap">
+    <div class="book" id="book">
 
-        <div class="hero-buttons">
-            <a href="#resume">Resume</a>
-            <a href="#about">Portfolio</a>
+      <div class="tabs" role="tablist" aria-label="Portfolio sections">
+        <button class="tab active" data-page="cover" role="tab" aria-selected="true">COVER</button>
+        <button class="tab" data-page="profile" role="tab" aria-selected="false">PROFILE</button>
+        <button class="tab" data-page="experience" role="tab" aria-selected="false">EXP</button>
+        <button class="tab" data-page="education" role="tab" aria-selected="false">EDU/SKL</button>
+        <button class="tab" data-page="projects" role="tab" aria-selected="false">PROJECTS</button>
+        <button class="tab" data-page="contact" role="tab" aria-selected="false">CONTACT</button>
+      </div>
+
+      <!-- COVER -->
+      <section class="page active" data-page="cover">
+        <div class="stamp" data-code="TA · COVER"></div>
+        <div class="doc-head"><span class="live">FILE NO. TA-2026</span><span>STATUS: ACTIVE</span></div>
+        <div class="cover-center">
+          <div class="badge-wrap">
+            <div class="badge" id="badge">
+              <img src="mypic.png" alt="Tanveer Ahmad">
+              <span class="cap">Site Photo ID</span>
+            </div>
+          </div>
+          <h1>Tanveer Ahmad</h1>
+          <h3>Document Controller &nbsp;·&nbsp; Subcontractor Invoicing &amp; Systems &nbsp;·&nbsp; Software Engineer</h3>
+          <p class="tagline" id="tagline"></p>
+          <div class="chip-row">
+            <span class="chip">6+ YRS EXP</span>
+            <span class="chip">PK ⇄ KSA</span>
+            <span class="chip">SPMS DEVELOPER</span>
+            <span class="chip">UR · EN · AR</span>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="Tanveer_Ahmad_CV.docx" download><i class='bx bx-download'></i>Download CV</a>
+            <button class="btn btn-ghost" data-goto="contact"><i class='bx bx-envelope'></i>Contact</button>
+          </div>
+          <div class="hint"><i class='bx bx-chevrons-right'></i> Swipe or tap a tab to open the file</div>
+        </div>
+      </section>
+
+      <!-- PROFILE -->
+      <section class="page" data-page="profile">
+        <div class="stamp" data-code="TA · PROFILE"></div>
+        <div class="doc-head"><span>PROFILE</span><span>DOC-ID: TA/PRO</span></div>
+        <h2>Summary</h2>
+        <p class="summary">A motivated and reliable Document Controller with proven expertise in document management systems, subcontractor invoice processing, project reporting and data control within fast-paced construction environments. Skilled in designing document control systems and building web-based applications to simplify invoice tracking — alongside supporting HR operations, general administration and official correspondence. A Software Engineering background feeds a growing focus on automating the paperwork itself.</p>
+
+        <div class="subhead">Currently</div>
+        <div class="now-card">
+          <b>Document Controller — Subcontractor Invoicing, Systems &amp; HR</b>
+          Nam Arabia Co., Saudi Arabia (Nov 2025 – present)
         </div>
 
-        <div class="social-icons">
-            <a href="https://www.linkedin.com/in/tanveer-ahmad-353ba5252?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://wa.me/+966504717535" target="_blank"><i class="fab fa-whatsapp"></i></a>
-            <a href="mailto:mrtanveer2017@gmail.com"><i class="fas fa-envelope"></i></a>
-        </div>
-    </div>
-</section>
-
-<!-- PANEL 2 -->
-<section id="about" class="panel about">
-    <div class="about-left">
-        <h2>ABOUT</h2>
-        <p class="email">mrtanveer2017@gmail.com</p>
-
-        <p class="desc">
-            Detail-oriented Site Document Controller with 6+ years of experience
-            in construction documentation across Pakistan and Saudi Arabia.
-            Skilled in document control systems, reporting, workflow management,
-            and coordination with consultants and contractors.
-        </p>
-
-        <div class="location">
-            Jeddah, Saudi Arabia
-        </div>
-    </div>
-
-    <div class="about-right">
-
-        <img src="images/profile.png" alt="Tanveer Ahmad">
-</div>
-</section>
-
-<!-- PANEL 3 -->
-<section id="resume" class="panel resume">
-
-<div class="resume-container">
-
-    <!-- HEADER -->
-    <div class="resume-header">
-        <h2>Professional Resume</h2>
-        <a href="Tanveer Ahmad.pdf" download class="download-btn">
-            <i class="fas fa-download"></i> Download CV
-        </a>
-    </div>
-
-    <!-- PROFILE -->
-    <div class="resume-section">
-        <h3><i class="fas fa-user"></i> PROFILE</h3>
-        <p>
-            Detail-oriented Site Document Controller with 6+ years of experience 
-            in construction documentation across Pakistan and Saudi Arabia. 
-            Skilled in managing submittals, invoices, revisions, reporting, and 
-            coordination with consultants and contractors.
-        </p>
-    </div>
-
-    <!-- EXPERIENCE -->
-    <div class="resume-section">
-        <h3><i class="fas fa-briefcase"></i> PROFESSIONAL EXPERIENCE</h3>
-
-        <div class="exp-block">
-            <strong>82 Million Project NHC-153 Villa</strong>
-            <span>Site Document Controller (2024–2026) - Present</span>
-            <ul>
-                <li>Managed project drawings, invoices, and documentation.</li>
-                <li>Reviewed submittals before consultant submission.</li>
-                <li>Prepared daily, weekly & monthly reports.</li>
-                <li>Tracked revisions and approvals.</li>
-            </ul>
-        </div>
-
-        <div class="exp-block">
-            <strong>Silver Contracting Co. – Pakistan</strong>
-            <span>Document Controller (2019–2024)</span>
-            <ul>
-                <li>Managed warehouse and site documentation.</li>
-                <li>Tracked material logs and stock reports.</li>
-                <li>Organized project and inventory records.</li>
-            </ul>
-        </div>
-
-        <div class="exp-block">
-            <strong>Riphah University – Pakistan</strong>
-            <span>Team Leader (2021–2024)</span>
-            <ul>
-                <li>Organized academic and digital documentation.</li>
-                <li>Supported IT and reporting tasks.</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- SKILLS -->
-    <div class="resume-section">
-<h3><i class="fas fa-lightbulb"></i> SKILLS</h3>
-
-<div class="skill-block">
-    <span>Document Control</span>
-    <div class="dots level-9">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-    </div>
-</div>
-
-<div class="skill-block">
-    <span>Reporting</span>
-    <div class="dots level-9">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-    </div>
-</div>
-
-<div class="skill-block">
-    <span>Data Management</span>
-    <div class="dots level-9">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-    </div>
-</div>
-
-<div class="skill-block">
-    <span>Workflow Coordination</span>
-    <div class="dots level-9">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-    </div>
-</div>
-
-</div>
-<div class="resume-section">
-<h3><i class="fas fa-globe"></i> LANGUAGES</h3>
-
-<div class="language-grid">
-
-    <div class="circle-box">
-        <div class="circle" style="--percent:100"></div>
-        <p>Urdu</p>
-    </div>
-
-    <div class="circle-box">
-        <div class="circle" style="--percent:85"></div>
-        <p>English</p>
-    </div>
-
-    <div class="circle-box">
-        <div class="circle" style="--percent:50"></div>
-        <p>Arabic</p>
-    </div>
-
-</div>
-</div>
-    <!-- CERTIFICATIONS -->
-    <div class="resume-section">
-        <h3><i class="fas fa-certificate"></i> CERTIFICATIONS</h3>
-        <ul class="simple-list">
-            <li>Bachelor’s Degree in Software Engineering – 2024</li>
-            <li>Document Control & Office Management Training</li>
-            <li>MS Office & Data Management Skills</li>
-            <li>Personality Grooming Certificate</li>
+        <div class="subhead">Highlights</div>
+        <ul class="tick reveal">
+          <li>Designed and developed the Subcontractor Payment Management System (SPMS) to control and track invoices and payment status.</li>
+          <li>Built a web-based application to record and manage subcontractor invoices digitally.</li>
+          <li>Streamlined document control systems and workflows to improve accuracy and speed.</li>
+          <li>Support HR activities, general administration and day-to-day email correspondence.</li>
         </ul>
-    </div>
 
-    <!-- ACHIEVEMENTS -->
-    <div class="resume-section">
-        <h3><i class="fas fa-trophy"></i> ACHIEVEMENTS</h3>
-        <ul class="simple-list">
-            <li>Improved document control workflow efficiency.</li>
-            <li>Maintained organized project records across multiple sites.</li>
-            <li>Ensured timely submission of WIRs & material approvals.</li>
+        <div class="subhead">Languages</div>
+        <div class="lang-row">
+          <div class="lang-item"><b>Urdu</b> — Native</div>
+          <div class="lang-item"><b>English</b> — Fluent</div>
+          <div class="lang-item"><b>Arabic</b> — Basic</div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="page" data-page="experience">
+        <div class="stamp" data-code="TA · EXPERIENCE"></div>
+        <div class="doc-head"><span>WORK HISTORY</span><span>DOC-ID: TA/EXP</span></div>
+        <div class="tl">
+          <div class="tl-item reveal">
+            <span class="now-pill">CURRENT</span>
+            <span class="tl-tag">NOV 2025 – PRESENT · SAUDI ARABIA</span>
+            <h4>Document Controller — Subcontractor Invoicing, Systems &amp; HR</h4>
+            <p><b>Nam Arabia Co.</b></p>
+            <p>Handle and process all subcontractor invoices, ensuring accuracy, backup and timely approval.</p>
+            <p>Designed and developed the SPMS to control and track subcontractor invoices and payment status.</p>
+            <p>Built a web-based application to record, organise and manage subcontractor invoices digitally.</p>
+            <p>Perform HR-related activities, assist with general administration, and manage email correspondence.</p>
+          </div>
+          <div class="tl-item reveal">
+            <span class="tl-tag">OCT 2024 – OCT 2025 · SAUDI ARABIA</span>
+            <h4>Site Document Controller — Nam Arabia Co.</h4>
+            <p>Managed and controlled all project documents, drawings and invoices.</p>
+            <p>Reviewed submittals before consultant issue and tracked revisions so the latest version was always on site.</p>
+            <p>Designed document control systems to make workflows easier and more efficient.</p>
+            <p>Prepared daily, weekly and monthly progress reports for management.</p>
+          </div>
+          <div class="tl-item reveal">
+            <span class="tl-tag">2019 – 2024 · PAKISTAN</span>
+            <h4>Document Controller — Silver Contracting Co.</h4>
+            <p>Maintained records for material delivery notes, requests and approvals.</p>
+            <p>Managed warehouse and site documentation, tracking material movement against daily/weekly stock reports.</p>
+            <p>Ensured proper labelling, numbering and archiving for fast retrieval.</p>
+          </div>
+          <div class="tl-item reveal">
+            <span class="tl-tag">2021 – 2024 · PAKISTAN</span>
+            <h4>Team Leader — Riphah University</h4>
+            <p>Organised academic and technical documents and supported digital record management.</p>
+            <p>Assisted faculty with IT and documentation tasks across workshops and projects.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION & SKILLS -->
+      <section class="page" data-page="education">
+        <div class="stamp" data-code="TA · EDU/SKL"></div>
+        <div class="doc-head"><span>EDUCATION &amp; SKILLS</span><span>DOC-ID: TA/EDU</span></div>
+
+        <div class="subhead">Education</div>
+        <div class="edu-card">
+          <b>BS Software Engineering</b>
+          <span>Riphah International University (RIU) · 2024</span>
+        </div>
+        <div class="edu-card">
+          <b>FSc Pre-Engineering</b>
+          <span>PGCS, Faisalabad · 2019</span>
+        </div>
+
+        <div class="subhead">Certifications</div>
+        <div class="tags">
+          <span class="tag">Document Control &amp; Office Mgmt Training</span>
+          <span class="tag">MS Office &amp; Data Management</span>
+          <span class="tag">Personality Grooming Certificate</span>
+        </div>
+
+        <div class="subhead">Proficiency</div>
+        <div class="meter reveal" style="--pct:92%">
+          <div class="lbl"><span>Document Control Systems</span><span>92%</span></div>
+          <div class="bar"><div class="fill"></div></div>
+        </div>
+        <div class="meter reveal" style="--pct:85%">
+          <div class="lbl"><span>Subcontractor Invoicing</span><span>85%</span></div>
+          <div class="bar"><div class="fill"></div></div>
+        </div>
+        <div class="meter reveal" style="--pct:78%">
+          <div class="lbl"><span>Systems &amp; Web App Development</span><span>78%</span></div>
+          <div class="bar"><div class="fill"></div></div>
+        </div>
+        <div class="meter reveal" style="--pct:70%">
+          <div class="lbl"><span>HR &amp; Administration Support</span><span>70%</span></div>
+          <div class="bar"><div class="fill"></div></div>
+        </div>
+
+        <div class="subhead">Document control</div>
+        <div class="tags">
+          <span class="tag">Submittals</span><span class="tag">RFIs</span><span class="tag">WIRs</span>
+          <span class="tag">MIRs</span><span class="tag">Transmittals</span><span class="tag">Revision tracking</span>
+        </div>
+
+        <div class="subhead">Commercial</div>
+        <div class="tags">
+          <span class="tag">Subcontractor invoicing</span><span class="tag">Invoice verification</span><span class="tag">IPC tracking</span><span class="tag">Payment certificates</span>
+        </div>
+
+        <div class="subhead">Software &amp; tools</div>
+        <div class="tags">
+          <span class="tag">Excel (Advanced)</span><span class="tag">SharePoint</span><span class="tag">Adobe Acrobat</span>
+          <span class="tag">HTML/CSS/JS</span><span class="tag">Firebase</span><span class="tag">Java · Android</span>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="page" data-page="projects">
+        <div class="stamp" data-code="TA · PROJECTS"></div>
+        <div class="doc-head"><span>PROJECTS</span><span>DOC-ID: TA/PRJ</span></div>
+
+        <div class="proj reveal">
+          <span class="tl-tag">FIREBASE · MULTI-ROLE SYSTEM</span>
+          <h4>Subcontractor Payment Management System (SPMS)</h4>
+          <p>A custom platform for construction payment workflows: admin, finance, management, end-user and viewer panels, with approval workflow, PDF generation and dashboard analytics on a real-time Firebase backend.</p>
+        </div>
+
+        <div class="proj reveal">
+          <span class="tl-tag">WEB APP · INVOICE RECORDS</span>
+          <h4>Subcontractor Invoice Web App</h4>
+          <p>A web-based application built to record, organise and track subcontractor invoices digitally — replacing manual logs with a searchable, always up-to-date system.</p>
+        </div>
+
+        <div class="proj reveal">
+          <span class="tl-tag">FINAL YEAR PROJECT · ANDROID</span>
+          <h4>Donation App</h4>
+          <p>An Android application connecting donors with organisations, built for transparent, accessible donation management on mobile.</p>
+        </div>
+
+        <div class="proj reveal">
+          <span class="tl-tag">QR-BASED PORTFOLIO</span>
+          <h4>This portfolio, scanned into being</h4>
+          <p>A document-control-styled dossier, built to open straight from a QR scan — the file you're reading right now.</p>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="page" data-page="contact">
+        <div class="stamp" data-code="TA · CONTACT"></div>
+        <div class="doc-head"><span>CONTACT</span><span>DOC-ID: TA/CTC</span></div>
+
+        <div class="contact-photo"><img src="mypic.png" alt="Tanveer Ahmad"></div>
+
+        <ul class="contact-list">
+          <li>
+            <a href="tel:+966504717535"><i class='bx bx-phone'></i>+966 50 471 7535</a>
+            <div class="contact-note">Call or WhatsApp</div>
+          </li>
+          <li>
+            <a href="mailto:mrtanveer2017@gmail.com"><i class='bx bx-envelope'></i>mrtanveer2017@gmail.com</a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener"><i class='bx bxl-linkedin'></i>Tanveer Ahmad — LinkedIn</a>
+          </li>
+          <li>
+            <a href="#"><i class='bx bx-map'></i>Jeddah, Saudi Arabia</a>
+          </li>
         </ul>
+
+        <div class="btn-row" style="margin-top:8px;">
+          <a class="btn btn-primary" href="Tanveer_Ahmad_CV.docx" download><i class='bx bx-download'></i>Download CV</a>
+          <button class="btn btn-ghost" id="openQR"><i class='bx bx-qr-scan'></i>Share via QR</button>
+        </div>
+      </section>
+
     </div>
 
-    <!-- RESEARCH -->
-    <div class="resume-section">
-        <h3><i class="fas fa-code"></i> RESEARCH PROJECT</h3>
-        <p>
-            Developed an Android-based Donation App integrating multiple charities 
-            into one platform for improved transparency and accessibility.
-        </p>
+    <div class="pager">
+      <button id="prevBtn" aria-label="Previous page"><i class='bx bx-chevron-left'></i></button>
+      <div class="dots" id="dots"></div>
+      <button id="nextBtn" aria-label="Next page"><i class='bx bx-chevron-right'></i></button>
     </div>
-
+  </div>
 </div>
-</section>
 
-<!-- PANEL 4 -->
-<section id="projects" class="panel projects">
+<div class="qr-modal" id="qrModal">
+  <div class="qr-box">
+    <h3>Scan to open this portfolio</h3>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://engrtanveerbaig-tech.github.io/Portfolio/" alt="QR code linking to portfolio">
+    <p>engrtanveerbaig-tech.github.io/Portfolio</p>
+    <button id="closeQR">Close</button>
+  </div>
+</div>
 
-    <div class="projects-container">
+<script>
+(function(){
+  var order = ['cover','profile','experience','education','projects','contact'];
+  var pages = {};
+  var tabs = {};
+  order.forEach(function(k){
+    pages[k] = document.querySelector('.page[data-page="'+k+'"]');
+    tabs[k]  = document.querySelector('.tab[data-page="'+k+'"]');
+  });
+  var current = 0;
+  var visits = {};
 
-        <h2>RECENT PROJECTS</h2>
+  var dotsWrap = document.getElementById('dots');
+  order.forEach(function(k, i){
+    var d = document.createElement('span');
+    d.className = 'dot' + (i===0 ? ' on' : '');
+    dotsWrap.appendChild(d);
+  });
+  var dots = dotsWrap.querySelectorAll('.dot');
 
-        <div class="project-card" tabindex="0">
-            <img src="images/project1.png">
-            <div class="project-info">
-                <h4>Darat Sadayem</h4>
-                <p>NHC 153 Villa Darat Sadayem</p>
-            </div>
-        </div>
+  function stampFor(key){ return pages[key].querySelector('.stamp'); }
 
-        <div class="project-card">
-            <img src="images/project2.png">
-            <div class="project-info">
-                <h4>Al Hamdaniya</h4>
-                <p>NHC 84 Villa - Al Hamdaniya</p>
-            </div>
-        </div>
+  function fireStamp(key){
+    var s = stampFor(key);
+    if(!s) return;
+    visits[key] = (visits[key]||0) + 1;
+    var rev = String(visits[key]).padStart(2,'0');
+    s.textContent = (s.getAttribute('data-code') || '') + '\nREV. ' + rev;
+    s.classList.remove('pop');
+    void s.offsetWidth;
+    s.classList.add('pop');
+  }
 
-        <div class="project-card">
-            <img src="images/project3.png">
-            <div class="project-info">
-                <h4>Darat Al Madinah</h4>
-                <p>NHC 68 Villa - Darat Al Madinah</p>
-            </div>
-        </div>
+  function goTo(index){
+    if(index === current || index < 0 || index >= order.length) return;
+    var fromKey = order[current];
+    var toKey = order[index];
 
-    </div>
+    pages[fromKey].classList.remove('active');
+    pages[toKey].classList.add('active');
 
-</section>
+    tabs[fromKey].classList.remove('active');
+    tabs[fromKey].setAttribute('aria-selected','false');
+    tabs[toKey].classList.add('active');
+    tabs[toKey].setAttribute('aria-selected','true');
 
-<script src="script.js"></script>
+    dots[current].classList.remove('on');
+    dots[index].classList.add('on');
+
+    current = index;
+    fireStamp(toKey);
+    updateButtons();
+    revealObserver.disconnect();
+    pages[toKey].querySelectorAll('.reveal, .tl-item, .meter').forEach(function(el){ revealObserver.observe(el); });
+  }
+
+  function updateButtons(){
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === order.length - 1;
+  }
+
+  order.forEach(function(k, i){ tabs[k].addEventListener('click', function(){ goTo(i); }); });
+  document.getElementById('prevBtn').addEventListener('click', function(){ goTo(current-1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ goTo(current+1); });
+  document.querySelectorAll('[data-goto]').forEach(function(btn){
+    btn.addEventListener('click', function(){ goTo(order.indexOf(btn.getAttribute('data-goto'))); });
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight') goTo(current+1);
+    if(e.key === 'ArrowLeft') goTo(current-1);
+  });
+
+  /* swipe */
+  var touchStartX = 0, touchStartY = 0;
+  var book = document.getElementById('book');
+  book.addEventListener('touchstart', function(e){
+    touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
+  }, {passive:true});
+  book.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){
+      if(dx < 0) goTo(current+1); else goTo(current-1);
+    }
+  }, {passive:true});
+
+  /* QR modal */
+  var modal = document.getElementById('qrModal');
+  document.getElementById('openQR').addEventListener('click', function(){ modal.classList.add('open'); });
+  document.getElementById('closeQR').addEventListener('click', function(){ modal.classList.remove('open'); });
+  modal.addEventListener('click', function(e){ if(e.target === modal) modal.classList.remove('open'); });
+
+  /* button ripple */
+  document.querySelectorAll('.btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      var r = document.createElement('span');
+      r.className = 'ripple';
+      var rect = btn.getBoundingClientRect();
+      r.style.left = (e.clientX - rect.left - 6) + 'px';
+      r.style.top = (e.clientY - rect.top - 6) + 'px';
+      r.style.width = r.style.height = '12px';
+      btn.appendChild(r);
+      setTimeout(function(){ r.remove(); }, 600);
+    });
+  });
+
+  /* badge 3D tilt */
+  var badge = document.getElementById('badge');
+  badge.addEventListener('mousemove', function(e){
+    var r = badge.getBoundingClientRect();
+    var px = (e.clientX - r.left)/r.width - .5;
+    var py = (e.clientY - r.top)/r.height - .5;
+    badge.style.transform = 'rotateY('+(px*22)+'deg) rotateX('+(-py*22)+'deg) scale(1.05)';
+  });
+  badge.addEventListener('mouseleave', function(){ badge.style.transform = ''; });
+
+  /* ambient pointer spotlight */
+  var spot = document.getElementById('spotBg');
+  window.addEventListener('pointermove', function(e){
+    spot.style.setProperty('--mx', e.clientX + 'px');
+    spot.style.setProperty('--my', e.clientY + 'px');
+  }, {passive:true});
+
+  /* dust motes */
+  var motes = document.getElementById('motes');
+  for(var i=0;i<16;i++){
+    var m = document.createElement('span');
+    m.style.left = (Math.random()*100) + '%';
+    m.style.animationDuration = (10 + Math.random()*14) + 's';
+    m.style.animationDelay = (Math.random()*14) + 's';
+    m.style.opacity = .3 + Math.random()*.4;
+    motes.appendChild(m);
+  }
+
+  /* typewriter tagline */
+  var taglineText = "Six years keeping construction paperwork \u2014 submittals, invoices, subcontractor payments \u2014 moving cleanly between site, consultant and client, across Pakistan and Saudi Arabia.";
+  var tEl = document.getElementById('tagline');
+  var ti = 0;
+  tEl.classList.add('typing');
+  function typeStep(){
+    tEl.textContent = taglineText.slice(0, ti);
+    ti++;
+    if(ti <= taglineText.length){ setTimeout(typeStep, 14); }
+    else { tEl.classList.remove('typing'); }
+  }
+  setTimeout(typeStep, 900);
+
+  /* scroll-reveal + progress bars, re-triggerable per page view */
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.classList.add('in');
+      }
+    });
+  }, { root: null, threshold:.2 });
+  pages.cover.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+
+  fireStamp('cover');
+  updateButtons();
+})();
+</script>
 </body>
 </html>
