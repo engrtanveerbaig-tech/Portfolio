@@ -3,702 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Tanveer Ahmad — Document Controller | Software Engineer</title>
-<meta name="description" content="Portfolio dossier of Tanveer Ahmad, Document Controller (Subcontractor Invoicing, Systems & HR) & Software Engineer, Jeddah, Saudi Arabia.">
+<title>Tanveer Ahmad - Document Controller | Software Engineer</title>
+<meta name="description" content="Portfolio drawing sheet of Tanveer Ahmad, Document Controller (Subcontractor Invoicing, Systems & HR) & Software Engineer, Jeddah, Saudi Arabia.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 <style>
   :root{
-    --paper:#efe7d3;
-    --paper-shade:#e3d6b6;
-    --paper-deep:#d0bf90;
-    --ink:#221c14;
-    --ink-soft:#5c5344;
-    --navy:#16324e;
-    --navy-soft:#2c4a66;
-    --kraft:#b9873f;
-    --kraft-dark:#8f6829;
-    --stamp:#a73a2e;
-    --approved:#3f6c4e;
-    --gold:#c79a4b;
-    --radius:8px;
+    --navy-deep:#ffffff;
+    --navy:#f6f8fb;
+    --navy-panel:#eef2f7;
+    --line:#33465c;
+    --line-dim:#c3cedb;
+    --ink:#16233a;
+    --ink-dim:#5b6b82;
+    --amber:#b5651d;
+    --amber-soft:#b5651d22;
+    --teal:#0d8074;
+    --radius:3px;
     --ease:cubic-bezier(.5,.05,.15,1);
     --ease-spring:cubic-bezier(.34,1.56,.64,1);
+    --grid-fine:22px;
+    --grid-bold:132px;
   }
 
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
-  html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
   body{
-    min-height:100dvh;
-    background:
-      radial-gradient(circle at 18% 8%, #1c3a59 0%, #102439 55%, #070f18 100%);
-    font-family:'IBM Plex Sans', sans-serif;
+    margin:0; min-height:100dvh;
+    background:var(--navy-deep);
     color:var(--ink);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
+    font-family:'Inter', sans-serif;
     position:relative;
+    overflow-x:hidden;
   }
 
-  /* ---------- ambient backdrop: three generated "images" (no external stock photos, fully vector/procedural) ---------- */
-  .grid-bg{
+  /* ---------- blueprint grid backdrop ---------- */
+  .grid-fine{
     position:fixed; inset:0; z-index:0; pointer-events:none;
     background-image:
-      linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-    background-size:34px 34px;
-    animation: drift 46s linear infinite;
-    opacity:.65;
+      linear-gradient(rgba(71,101,133,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(71,101,133,.05) 1px, transparent 1px);
+    background-size:var(--grid-fine) var(--grid-fine);
   }
-  @keyframes drift{
-    from{background-position:0 0, 0 0;}
-    to{background-position:340px 170px, 340px 170px;}
-  }
-  /* layer 2: soft drafting cross-hatch, like a rolled-out site plan behind the book */
-  .plan-bg{
-    position:fixed; inset:-10%; z-index:0; pointer-events:none; opacity:.16;
-    background-image: repeating-linear-gradient(115deg, transparent 0 26px, rgba(139,180,214,.5) 26px 27px);
-    mix-blend-mode:screen;
-    animation: driftplan 70s linear infinite;
-  }
-  @keyframes driftplan{
-    from{ transform:translate(0,0) rotate(0deg); }
-    to{ transform:translate(-4%,3%) rotate(1deg); }
-  }
-  /* layer 3: slow radial spotlight the pointer nudges, for depth */
-  .spot-bg{
+  .grid-bold{
     position:fixed; inset:0; z-index:0; pointer-events:none;
-    background: radial-gradient(480px circle at var(--mx,50%) var(--my,30%), rgba(199,154,75,.16), transparent 60%);
-    transition: background-position .2s ease;
+    background-image:
+      linear-gradient(rgba(71,101,133,.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(71,101,133,.12) 1px, transparent 1px);
+    background-size:var(--grid-bold) var(--grid-bold);
   }
-  /* floating dust motes for atmosphere */
-  .motes{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-  .motes span{
-    position:absolute; width:3px; height:3px; border-radius:50%;
-    background:rgba(216,201,159,.55); bottom:-10px;
-    animation:rise linear infinite;
+  .scan{
+    position:fixed; left:0; right:0; height:140px; z-index:0; pointer-events:none;
+    background:linear-gradient(180deg, transparent, rgba(13,148,136,.06), transparent);
+    animation:scan 9s linear infinite;
   }
-  @keyframes rise{
-    from{ transform:translateY(0) translateX(0); opacity:0; }
-    10%{ opacity:.8; }
-    90%{ opacity:.5; }
-    to{ transform:translateY(-110vh) translateX(20px); opacity:0; }
+  @keyframes scan{ from{ top:-140px; } to{ top:100vh; } }
+
+  /* crosshair + coordinate readout - desktop / fine pointer only */
+  .crosshair-x, .crosshair-y{
+    position:fixed; z-index:2; pointer-events:none; background:rgba(181,101,29,.4);
+    display:none;
+  }
+  .crosshair-x{ top:0; bottom:0; width:1px; }
+  .crosshair-y{ left:0; right:0; height:1px; }
+  .coord-readout{
+    position:fixed; z-index:3; pointer-events:none; display:none;
+    font-family:'JetBrains Mono', monospace; font-size:.62rem; letter-spacing:.03em;
+    color:var(--amber); background:rgba(255,255,255,.95); border:1px solid var(--amber-soft);
+    box-shadow:0 2px 10px rgba(22,35,58,.12);
+    padding:3px 7px; border-radius:2px; transform:translate(10px, -22px); white-space:nowrap;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .crosshair-x, .crosshair-y, .coord-readout{ display:block; }
   }
 
-  .rig{
-    position:relative;
-    z-index:1;
-    width:min(430px, 100vw);
-    height:min(100dvh, 932px);
-    display:flex;
-    align-items:stretch;
-  }
+  h1,h2,h3,h4{ font-family:'Space Grotesk', sans-serif; margin:0; color:var(--ink); font-weight:600; }
 
-  .book-wrap{
-    position:relative;
-    flex:1;
-    perspective:1900px;
-    filter:drop-shadow(0 24px 46px rgba(0,0,0,.5)) drop-shadow(0 2px 8px rgba(0,0,0,.35));
-  }
+  .wrap{ position:relative; z-index:1; max-width:520px; margin:0 auto; padding-bottom:96px; }
 
-  .book{
-    position:relative;
-    width:100%;
-    height:100%;
-    background:var(--paper);
-    overflow:hidden;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  /* ---------- top strip ---------- */
+  .top-strip{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:14px 20px; font-family:'JetBrains Mono', monospace; font-size:.64rem;
+    letter-spacing:.08em; color:var(--ink-dim); text-transform:uppercase;
+    border-bottom:1px solid rgba(71,101,133,.15);
   }
+  .top-strip .live{ display:inline-flex; align-items:center; gap:6px; color:var(--teal); }
+  .top-strip .live::before{
+    content:""; width:6px; height:6px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 0 rgba(13,148,136,.6); animation:pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(13,148,136,.55);} 70%{box-shadow:0 0 0 7px rgba(13,148,136,0);} 100%{box-shadow:0 0 0 0 rgba(13,148,136,0);} }
 
-  /* paper grain, procedural (SVG fractal noise) laid over the whole book */
-  .book::after{
-    content:"";
-    position:absolute; inset:0; z-index:6; pointer-events:none;
-    opacity:.05; mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  /* ---------- sheet sections ---------- */
+  .sheet{
+    position:relative; margin:26px 16px 0; padding:26px 20px 30px;
+    background:var(--navy);
+    border:1px solid rgba(71,101,133,.2); border-radius:var(--radius);
+    box-shadow:0 1px 3px rgba(22,35,58,.05);
+    opacity:0; transform:translateY(22px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease);
   }
+  .sheet.in{ opacity:1; transform:translateY(0); }
+  .sheet::before, .sheet::after{
+    content:""; position:absolute; width:10px; height:10px; border:1.5px solid var(--line-dim);
+  }
+  .sheet::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+  .sheet::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+  .sheet-no{
+    position:absolute; top:-11px; right:16px; background:var(--navy-deep);
+    padding:0 8px; font-family:'JetBrains Mono', monospace; font-size:.6rem; letter-spacing:.08em;
+    color:var(--amber);
+  }
+  .sheet-label{
+    font-family:'JetBrains Mono', monospace; font-size:.64rem; letter-spacing:.1em;
+    color:var(--line-dim); text-transform:uppercase; margin-bottom:14px;
+    border-bottom:1px dashed rgba(71,101,133,.25); padding-bottom:8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sheet-label i{ font-size:.9rem; color:var(--amber); }
 
-  /* torn perforation strip along the top, a document-control detail */
-  .book::before{
-    content:"";
-    position:absolute; top:0; left:0; right:0; height:10px; z-index:5;
-    background-image: radial-gradient(circle, rgba(0,0,0,.2) 1.6px, transparent 1.7px);
-    background-size:14px 14px;
-    background-position: 4px 4px;
+  /* ---------- cover ---------- */
+  .cover{ padding-top:38px; text-align:center; }
+  .compass{
+    width:132px; height:132px; margin:0 auto 10px; position:relative;
   }
-
-  .page{
-    position:absolute; inset:0;
-    padding:34px 22px 84px;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
-    transform-origin:left center;
-    transform:rotateY(-112deg);
-    opacity:0;
-    visibility:hidden;
-    transition: transform .72s var(--ease), opacity .4s ease, box-shadow .72s var(--ease);
-    background:var(--paper);
-    box-shadow:none;
+  .compass .ring{
+    position:absolute; inset:0; border-radius:50%;
+    border:1px solid rgba(71,101,133,.35);
+    animation:spin 26s linear infinite;
   }
-  .page.active{
-    transform:rotateY(0deg);
-    opacity:1;
-    visibility:visible;
-    z-index:2;
-    box-shadow: -22px 0 40px -20px rgba(0,0,0,.35) inset;
+  .compass .ring::before, .compass .ring::after{
+    content:""; position:absolute; background:var(--amber);
   }
-  .page.exit-back{ transform:rotateY(112deg); }
-
-  @media (prefers-reduced-motion: reduce){
-    .page{ transition:opacity .3s ease; transform:none !important; }
-    .grid-bg,.plan-bg,.motes span{ animation:none !important; }
+  .compass .ring::before{ top:-1px; left:50%; width:1px; height:9px; transform:translateX(-50%); }
+  .compass .ring::after{ bottom:-1px; left:50%; width:1px; height:9px; transform:translateX(-50%); }
+  .compass .ring2{
+    position:absolute; inset:10px; border-radius:50%; border:1px dashed rgba(13,148,136,.5);
+    animation:spin 40s linear infinite reverse;
   }
-
-  .page::-webkit-scrollbar{ width:0; }
-
-  /* reveal-on-scroll utility */
-  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .55s var(--ease), transform .55s var(--ease); }
-  .reveal.in{ opacity:1; transform:translateY(0); }
-
-  /* doc-id header row on every page */
-  .doc-head{
-    display:flex; justify-content:space-between; align-items:baseline;
-    font-family:'IBM Plex Mono', monospace;
-    font-size:.62rem; letter-spacing:.06em;
-    color:var(--ink-soft);
-    border-bottom:1px dashed var(--paper-deep);
-    padding-bottom:8px; margin-bottom:18px;
-    text-transform:uppercase;
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .compass img{
+    position:absolute; inset:20px; width:calc(100% - 40px); height:calc(100% - 40px);
+    border-radius:50%; object-fit:cover; background:var(--navy-panel);
+    box-shadow:0 0 0 3px var(--navy-deep), 0 8px 20px -8px rgba(22,35,58,.25);
   }
-  .doc-head .live{ display:inline-flex; align-items:center; gap:5px; }
-  .doc-head .live::before{
-    content:""; width:6px; height:6px; border-radius:50%; background:var(--approved);
-    box-shadow:0 0 0 0 rgba(63,108,78,.55); animation:pulse 2.2s ease-out infinite;
+  .cover h1{ font-size:1.7rem; margin-top:20px; opacity:0; transform:translateY(8px); animation:rise .6s var(--ease) .15s forwards; }
+  .cover h3{
+    font-family:'Inter', sans-serif; font-weight:500; font-size:.86rem; color:var(--ink-dim);
+    margin-top:6px; opacity:0; transform:translateY(8px); animation:rise .6s var(--ease) .28s forwards;
   }
-  @keyframes pulse{
-    0%{ box-shadow:0 0 0 0 rgba(63,108,78,.5); }
-    70%{ box-shadow:0 0 0 7px rgba(63,108,78,0); }
-    100%{ box-shadow:0 0 0 0 rgba(63,108,78,0); }
-  }
-
-  h1,h2,h3,h4{ font-family:'Zilla Slab', serif; margin:0; color:var(--navy); }
-
-  /* rubber stamp mark */
-  .stamp{
-    position:absolute; top:46px; right:18px; z-index:4;
-    width:88px; height:88px;
-    border:3px solid var(--stamp);
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center; text-align:center;
-    color:var(--stamp); mix-blend-mode:multiply;
-    font-family:'IBM Plex Mono', monospace;
-    font-weight:600; font-size:.56rem; line-height:1.25;
-    letter-spacing:.03em; white-space:pre-line;
-    transform:rotate(-11deg) scale(0);
-    opacity:0;
-    pointer-events:none;
-  }
-  .stamp::before{
-    content:""; position:absolute; inset:5px; border:1px solid var(--stamp); border-radius:50%;
-  }
-  .stamp.pop{ animation: thunk .55s var(--ease-spring) forwards; }
-  @keyframes thunk{
-    0%{ transform:rotate(-15deg) scale(1.9); opacity:0; }
-    50%{ transform:rotate(-9deg) scale(.9); opacity:.9; }
-    100%{ transform:rotate(-11deg) scale(1); opacity:.85; }
-  }
-
-  /* ---------- COVER ---------- */
-  .badge-wrap{ display:flex; justify-content:center; margin-top:4px; perspective:600px; }
-  .badge{
-    width:118px; height:118px; border-radius:50%;
-    padding:5px;
-    background: conic-gradient(from 0deg, var(--gold), var(--kraft-dark), var(--gold));
-    position:relative;
-    box-shadow: 0 14px 30px -10px rgba(0,0,0,.45), 0 0 0 1px rgba(0,0,0,.05);
-    animation: spinring 9s linear infinite;
-    transition: transform .25s var(--ease);
-    transform-style:preserve-3d;
-    cursor:pointer;
-  }
-  @keyframes spinring{ to{ background-position:200% 0; } }
-  .badge img{
-    width:100%; height:100%; border-radius:50%; object-fit:cover; display:block;
-    background:var(--paper-shade);
-    box-shadow: inset 0 0 0 3px var(--paper);
-  }
-  .badge span.cap{
-    position:absolute; bottom:-20px; left:50%; transform:translateX(-50%);
-    font-family:'IBM Plex Mono', monospace; font-size:.55rem; letter-spacing:.12em;
-    color:var(--ink-soft); white-space:nowrap; text-transform:uppercase;
-  }
-  .cover-center{ text-align:center; margin-top:10px; }
-  .cover-center h1{
-    font-size:1.9rem; margin-top:34px;
-    opacity:0; transform:translateY(10px);
-    animation: rise-in .6s var(--ease) .15s forwards;
-  }
-  .cover-center h3{
-    font-family:'IBM Plex Sans', sans-serif; font-weight:500; font-size:.92rem;
-    color:var(--ink-soft); margin-top:6px;
-    opacity:0; transform:translateY(10px);
-    animation: rise-in .6s var(--ease) .28s forwards;
-  }
-  @keyframes rise-in{ to{ opacity:1; transform:translateY(0); } }
-
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
   .tagline{
-    font-size:.88rem; line-height:1.55; color:var(--ink); margin:18px auto 0; max-width:33ch;
-    min-height:3.2em;
-    border-right:2px solid transparent;
+    font-size:.85rem; line-height:1.6; color:var(--line); margin:18px auto 0; max-width:34ch;
+    min-height:3.4em; border-right:2px solid transparent;
   }
-  .tagline.typing{ border-right-color:var(--stamp); animation:blink 1s step-end infinite; }
+  .tagline.typing{ border-right-color:var(--amber); animation:blink 1s step-end infinite; }
   @keyframes blink{ 50%{ border-color:transparent; } }
 
-  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:20px; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:18px; }
   .chip{
-    font-family:'IBM Plex Mono', monospace; font-size:.62rem; letter-spacing:.03em;
-    background:var(--navy); color:var(--paper); padding:5px 10px; border-radius:20px;
-    box-shadow:0 4px 10px -4px rgba(22,50,78,.6);
-    opacity:0; transform:translateY(8px) scale(.9);
-    animation: rise-in .45s var(--ease-spring) forwards;
+    font-family:'JetBrains Mono', monospace; font-size:.6rem; letter-spacing:.04em;
+    border:1px solid var(--teal); color:var(--teal); padding:5px 10px; border-radius:2px;
+    opacity:0; transform:translateY(6px); animation:rise .45s var(--ease-spring) forwards;
+    display:inline-flex; align-items:center; gap:5px;
   }
-  .chip:nth-child(1){ animation-delay:.5s; }
-  .chip:nth-child(2){ animation-delay:.6s; }
-  .chip:nth-child(3){ animation-delay:.7s; }
-  .chip:nth-child(4){ animation-delay:.8s; }
+  .chip i{ font-size:.75rem; }
+  .chip:nth-child(1){ animation-delay:.45s; }
+  .chip:nth-child(2){ animation-delay:.55s; }
+  .chip:nth-child(3){ animation-delay:.65s; }
+  .chip:nth-child(4){ animation-delay:.75s; }
 
-  .btn-row{ display:flex; gap:10px; justify-content:center; margin-top:26px; flex-wrap:wrap; }
   .btn{
-    font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:.82rem;
-    padding:11px 16px; border-radius:var(--radius); text-decoration:none;
-    display:inline-flex; align-items:center; gap:6px; cursor:pointer; border:none;
-    position:relative; overflow:hidden;
-    transition: transform .18s var(--ease), box-shadow .18s var(--ease);
+    font-family:'Inter', sans-serif; font-weight:600; font-size:.8rem;
+    padding:11px 18px; border-radius:2px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px; cursor:pointer; border:1.5px solid var(--amber);
+    background:transparent; color:var(--amber); margin-top:24px;
+    transition:transform .18s var(--ease), background .18s var(--ease), color .18s var(--ease);
   }
-  .btn:active{ transform:scale(.95); }
-  .btn:focus-visible{ outline:3px solid var(--stamp); outline-offset:2px; }
-  .btn-primary{ background:var(--stamp); color:#fff; box-shadow:0 10px 22px -10px rgba(167,58,46,.8); }
-  .btn-primary:hover{ box-shadow:0 14px 26px -8px rgba(167,58,46,.9); transform:translateY(-2px); }
-  .btn-ghost{ background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
-  .btn-ghost:hover{ background:rgba(22,50,78,.06); transform:translateY(-2px); }
-  .btn .ripple{
-    position:absolute; border-radius:50%; background:rgba(255,255,255,.55);
-    transform:scale(0); animation:rip .55s ease-out forwards; pointer-events:none;
-  }
-  @keyframes rip{ to{ transform:scale(3); opacity:0; } }
+  .btn:hover{ background:var(--amber); color:var(--navy-deep); transform:translateY(-2px); }
+  .btn:active{ transform:scale(.96); }
+  .btn:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
 
-  .hint{
-    text-align:center; font-family:'IBM Plex Mono', monospace; font-size:.62rem;
-    color:var(--ink-soft); margin-top:30px; letter-spacing:.03em;
-    opacity:0; animation: rise-in .5s var(--ease) 1s forwards;
+  /* ---------- profile ---------- */
+  .summary{ font-size:.86rem; line-height:1.7; color:var(--line); }
+  .subhead{
+    font-family:'JetBrains Mono', monospace; font-size:.62rem; text-transform:uppercase;
+    letter-spacing:.1em; color:var(--amber); margin:20px 0 10px;
+    display:flex; align-items:center; gap:7px;
   }
-  .hint i{ vertical-align:middle; animation:nudge 1.6s ease-in-out infinite; display:inline-block; }
-  @keyframes nudge{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(4px); } }
-
-  /* ---------- PROFILE ---------- */
-  .summary{ font-size:.88rem; line-height:1.65; }
-  .subhead{ font-family:'IBM Plex Mono', monospace; font-size:.66rem; text-transform:uppercase;
-    letter-spacing:.08em; color:var(--kraft-dark); margin:22px 0 10px; border-bottom:1px solid var(--paper-deep); padding-bottom:5px;}
+  .subhead i{ font-size:.9rem; }
   .now-card{
-    background:var(--paper-shade); border-left:3px solid var(--navy); padding:11px 12px; border-radius:4px;
-    font-size:.82rem; box-shadow:0 6px 16px -10px rgba(0,0,0,.35);
-    position:relative; overflow:hidden;
+    background:rgba(13,148,136,.08); border-left:3px solid var(--teal); padding:11px 12px;
+    font-size:.8rem; border-radius:2px;
   }
-  .now-card::after{
-    content:""; position:absolute; inset:0; background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.35) 50%, transparent 60%);
-    background-size:220% 100%; background-position:130% 0; animation:sheen 5s ease-in-out infinite;
-  }
-  @keyframes sheen{ 0%,60%{ background-position:130% 0; } 100%{ background-position:-30% 0; } }
-  .now-card b{ display:block; font-family:'Zilla Slab', serif; font-size:.98rem; color:var(--navy); margin-bottom:2px;}
+  .now-card b{ display:flex; align-items:center; gap:7px; font-family:'Space Grotesk', sans-serif; font-size:.95rem; color:var(--ink); margin-bottom:4px; font-weight:600; }
+  .now-card b i{ color:var(--teal); font-size:1rem; }
   ul.tick{ list-style:none; padding:0; margin:0; }
-  ul.tick li{ font-size:.83rem; padding-left:24px; position:relative; margin-bottom:9px; line-height:1.4; }
-  ul.tick li::before{
-    content:"✔"; position:absolute; left:0; top:0; color:var(--approved); font-weight:700;
-  }
-  .lang-row{ display:flex; gap:14px; margin-top:6px; flex-wrap:wrap; }
-  .lang-item{ font-size:.78rem; }
-  .lang-item b{ font-family:'IBM Plex Mono', monospace; color:var(--navy); }
+  ul.tick li{ font-size:.82rem; display:flex; align-items:flex-start; gap:9px; margin-bottom:9px; line-height:1.45; color:var(--line); }
+  ul.tick li i{ color:var(--amber); font-size:.95rem; flex-shrink:0; margin-top:2px; }
+  .lang-row{ display:flex; gap:16px; margin-top:4px; flex-wrap:wrap; }
+  .lang-item{ font-size:.78rem; color:var(--line); display:flex; align-items:center; gap:6px; }
+  .lang-item i{ color:var(--teal); font-size:1rem; }
+  .lang-item b{ font-family:'JetBrains Mono', monospace; color:var(--ink); }
 
-  /* ---------- EXPERIENCE ---------- */
-  .tl{ position:relative; padding-left:20px; margin-top:6px; }
-  .tl::before{ content:""; position:absolute; left:5px; top:4px; bottom:4px; width:2px;
-    background:linear-gradient(var(--paper-deep), var(--kraft), var(--paper-deep)); }
-  .tl-item{ position:relative; margin-bottom:26px; }
-  .tl-item::before{
-    content:""; position:absolute; left:-20px; top:4px; width:12px; height:12px; border-radius:50%;
-    background:var(--stamp); border:2px solid var(--paper); box-shadow:0 0 0 3px rgba(167,58,46,.18);
-    transition: box-shadow .3s ease;
+  /* ---------- experience: dimension-line timeline ---------- */
+  .span-label{
+    font-family:'JetBrains Mono', monospace; font-size:.62rem; letter-spacing:.05em; color:var(--line-dim);
+    display:flex; align-items:center; gap:6px; margin-bottom:16px;
   }
-  .tl-item.in::before{ box-shadow:0 0 0 6px rgba(167,58,46,.12); }
-  .tl-tag{ font-family:'IBM Plex Mono', monospace; font-size:.64rem; color:var(--kraft-dark); letter-spacing:.03em; }
-  .tl-item h4{ font-size:1.02rem; margin:2px 0 6px; }
-  .tl-item p{ font-size:.8rem; margin:0 0 3px; line-height:1.5; color:var(--ink); }
-  .tl-item .now-pill{
-    display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:.6rem; letter-spacing:.05em;
-    background:var(--approved); color:#fff; padding:2px 7px; border-radius:10px; margin-bottom:6px;
+  .span-label i{ color:var(--amber); font-size:.85rem; }
+  .span-label::after{ content:""; flex:1; height:1px; background:repeating-linear-gradient(90deg, var(--line-dim) 0 4px, transparent 4px 8px); }
+  .dl{ position:relative; padding-left:22px; }
+  .dl::before{ content:""; position:absolute; left:5px; top:0; bottom:0; width:1px; background:var(--line-dim); }
+  .dl-item{ position:relative; margin-bottom:24px; }
+  .dl-item::before{
+    content:""; position:absolute; left:-22px; top:5px; width:11px; height:1px; background:var(--amber);
   }
+  .dl-item::after{
+    content:""; position:absolute; left:-20px; top:2px; width:7px; height:7px; border-radius:50%;
+    background:var(--navy-deep); border:2px solid var(--amber);
+  }
+  .dl-tag{ font-family:'JetBrains Mono', monospace; font-size:.62rem; color:var(--teal); letter-spacing:.03em; display:inline-flex; align-items:center; gap:5px; }
+  .dl-item h4{ font-size:.98rem; margin:3px 0 5px; display:flex; align-items:center; gap:7px; }
+  .dl-item h4 i{ color:var(--amber); font-size:1rem; flex-shrink:0; }
+  .dl-item p{ font-size:.79rem; margin:0 0 3px; line-height:1.5; color:var(--line); }
+  .now-pill{
+    display:inline-flex; align-items:center; gap:4px; font-family:'JetBrains Mono', monospace; font-size:.58rem; letter-spacing:.05em;
+    border:1px solid var(--teal); color:var(--teal); padding:2px 7px 2px 6px; border-radius:10px; margin-bottom:6px;
+  }
+  .now-pill i{ font-size:.7rem; }
 
-  /* ---------- EDU / SKILLS ---------- */
+  /* ---------- education / skills ---------- */
   .edu-card{ margin-bottom:10px; font-size:.82rem; }
-  .edu-card b{ font-family:'Zilla Slab', serif; color:var(--navy); font-size:.95rem; display:block; }
-  .edu-card span{ color:var(--ink-soft); font-size:.74rem; font-family:'IBM Plex Mono', monospace; }
+  .edu-card b{ font-family:'Space Grotesk', sans-serif; color:var(--ink); font-size:.92rem; display:flex; align-items:center; gap:7px; font-weight:600; }
+  .edu-card b i{ color:var(--teal); font-size:1rem; }
+  .edu-card span{ color:var(--ink-dim); font-size:.72rem; font-family:'JetBrains Mono', monospace; margin-left:23px; }
+
   .tags{ display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; }
   .tag{
-    font-size:.68rem; font-family:'IBM Plex Mono', monospace; background:var(--paper-shade);
-    border:1px solid var(--paper-deep); padding:4px 8px; border-radius:4px; color:var(--ink);
-    transition: transform .18s var(--ease-spring), box-shadow .18s ease, background .18s ease;
+    font-size:.66rem; font-family:'JetBrains Mono', monospace; background:rgba(71,101,133,.06);
+    border:1px solid rgba(71,101,133,.25); padding:4px 8px; border-radius:2px; color:var(--line);
+    transition:transform .18s var(--ease-spring), border-color .18s ease, color .18s ease;
+    display:inline-flex; align-items:center; gap:5px;
   }
-  .tag:hover{ transform:translateY(-3px); box-shadow:0 8px 14px -8px rgba(0,0,0,.35); background:#fff8e6; }
+  .tag i{ font-size:.8rem; }
+  .tag:hover{ transform:translateY(-2px); border-color:var(--amber); color:var(--amber); }
 
-  .meter{ margin-bottom:12px; }
-  .meter .lbl{ display:flex; justify-content:space-between; font-size:.72rem; margin-bottom:4px; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft); }
-  .meter .bar{ height:6px; border-radius:4px; background:var(--paper-shade); overflow:hidden; box-shadow:inset 0 1px 2px rgba(0,0,0,.15); }
-  .meter .fill{ height:100%; width:0; border-radius:4px; background:linear-gradient(90deg, var(--kraft-dark), var(--stamp)); transition:width 1.1s var(--ease) .1s; }
-  .meter.in .fill{ width:var(--pct); }
+  .ruler{ margin-bottom:16px; }
+  .ruler .lbl{ display:flex; justify-content:space-between; font-size:.72rem; margin-bottom:5px; font-family:'JetBrains Mono', monospace; color:var(--ink-dim); }
+  .ruler .lbl span:first-child{ display:inline-flex; align-items:center; gap:6px; }
+  .ruler .lbl i{ color:var(--amber); font-size:.85rem; }
+  .ruler .track{
+    position:relative; height:8px; border-radius:1px;
+    background-image:repeating-linear-gradient(90deg, rgba(71,101,133,.35) 0 1px, transparent 1px 10%);
+    background-color:rgba(71,101,133,.08);
+  }
+  .ruler .fill{ position:absolute; inset:0; width:0; background:linear-gradient(90deg, var(--teal), var(--amber)); transition:width 1.1s var(--ease) .1s; border-radius:1px; }
+  .ruler.in .fill{ width:var(--pct); }
+  .ruler .flag{
+    position:absolute; top:-16px; width:0; font-family:'JetBrains Mono', monospace; font-size:.6rem; color:var(--amber);
+    transition:left 1.1s var(--ease) .1s; left:0;
+  }
+  .ruler.in .flag{ left:var(--pct); transform:translateX(-100%); }
 
-  /* ---------- PROJECTS ---------- */
+  /* ---------- projects ---------- */
   .proj{
-    border:1px solid var(--paper-deep); border-radius:6px; padding:14px 15px; margin-bottom:14px;
-    background:linear-gradient(180deg, rgba(255,255,255,.4), transparent);
-    box-shadow:0 8px 18px -14px rgba(0,0,0,.4);
-    transition: transform .22s var(--ease), box-shadow .22s ease;
+    position:relative; border:1px solid rgba(71,101,133,.2); border-radius:2px; padding:14px 15px 15px; margin-bottom:14px;
+    background:rgba(71,101,133,.03);
+    transition:transform .22s var(--ease), border-color .22s ease;
   }
-  .proj:hover{ transform:translateY(-4px); box-shadow:0 16px 26px -14px rgba(0,0,0,.45); }
-  .proj h4{ font-size:1rem; margin-bottom:6px; }
-  .proj p{ font-size:.8rem; line-height:1.5; margin:0 0 6px; color:var(--ink); }
-  .proj .tl-tag{ display:block; margin-bottom:4px; }
+  .proj:hover{ transform:translateY(-3px); border-color:var(--teal); }
+  .proj .dl-tag{ display:inline-flex; margin-bottom:5px; }
+  .proj h4{ font-size:.96rem; margin-bottom:6px; display:flex; align-items:center; gap:7px; }
+  .proj h4 i{ color:var(--teal); font-size:1rem; flex-shrink:0; }
+  .proj p{ font-size:.79rem; line-height:1.5; margin:0; color:var(--line); }
 
-  /* ---------- CONTACT ---------- */
+  /* ---------- contact ---------- */
   .contact-photo{ display:flex; justify-content:center; margin-bottom:16px; }
   .contact-photo img{
-    width:64px; height:64px; border-radius:50%; object-fit:cover;
-    border:2px solid var(--paper); box-shadow:0 8px 18px -8px rgba(0,0,0,.45), 0 0 0 3px var(--kraft-dark);
+    width:58px; height:58px; border-radius:50%; object-fit:cover;
+    border:2px solid var(--navy-deep); box-shadow:0 0 0 2px var(--teal);
   }
   .contact-list{ list-style:none; padding:0; margin:6px 0 0; }
-  .contact-list li{ margin-bottom:14px; }
+  .contact-list li{ margin-bottom:13px; }
   .contact-list a{
     display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
-    font-size:.86rem; font-weight:500; padding:8px 9px; margin:0 -9px; border-radius:6px;
-    transition: background .18s ease, transform .18s ease;
+    font-size:.84rem; font-weight:500; padding:9px 10px; margin:0 -10px; border-radius:2px;
+    border:1px solid transparent;
+    transition:border-color .18s ease, transform .18s ease;
   }
-  .contact-list a:hover{ background:rgba(22,50,78,.06); transform:translateX(3px); }
-  .contact-list i{ font-size:1.15rem; color:var(--navy); width:22px; text-align:center; }
-  .contact-note{ font-size:.72rem; color:var(--ink-soft); margin-top:2px; font-family:'IBM Plex Mono', monospace; }
+  .contact-list a:hover{ border-color:rgba(71,101,133,.25); transform:translateX(3px); }
+  .contact-list i{ font-size:1.1rem; color:var(--amber); width:20px; text-align:center; }
+  .contact-note{ font-size:.68rem; color:var(--ink-dim); margin-top:2px; font-family:'JetBrains Mono', monospace; letter-spacing:.03em; text-transform:uppercase; }
 
-  /* ---------- TABS (binder dividers) ---------- */
-  .tabs{
-    position:absolute; top:64px; right:-32px; z-index:6;
-    display:flex; flex-direction:column; gap:10px;
+  /* ---------- layer nav (bottom) ---------- */
+  .title-strip{
+    position:fixed; left:0; right:0; bottom:52px; z-index:6;
+    background:rgba(255,255,255,.95); border-top:1px solid rgba(71,101,133,.15);
+    font-family:'JetBrains Mono', monospace; font-size:.6rem; color:var(--ink-dim);
+    letter-spacing:.05em; padding:6px 16px; text-align:center; backdrop-filter:blur(4px);
   }
-  .tab{
-    width:32px; padding:10px 0;
-    background:var(--kraft); color:#fff2dc;
-    border:none; border-radius:0 6px 6px 0;
-    font-family:'IBM Plex Mono', monospace; font-size:.6rem; letter-spacing:.08em;
-    writing-mode:vertical-rl; text-orientation:mixed;
-    cursor:pointer;
-    box-shadow:2px 2px 5px rgba(0,0,0,.25);
-    transition: transform .22s var(--ease-spring), background .2s ease, box-shadow .2s ease;
+  .title-strip b{ color:var(--amber); }
+  .layer-nav{
+    position:fixed; left:0; right:0; bottom:0; z-index:6; height:52px;
+    background:var(--navy-deep); border-top:1px solid rgba(71,101,133,.15);
+    display:flex; overflow-x:auto; scrollbar-width:none;
   }
-  .tab:hover{ transform:translateX(-2px); box-shadow:3px 4px 9px rgba(0,0,0,.32); }
-  .tab.active{ background:var(--navy); transform:translateX(-4px); box-shadow:3px 4px 10px rgba(0,0,0,.35); }
-  .tab:focus-visible{ outline:2px solid var(--stamp); outline-offset:2px; }
-
-  /* ---------- bottom pager ---------- */
-  .pager{
-    position:absolute; left:0; right:0; bottom:0; z-index:6;
-    height:58px; background:var(--paper-shade); border-top:1px solid var(--paper-deep);
-    display:flex; align-items:center; justify-content:space-between; padding:0 16px;
-    box-shadow:0 -8px 16px -14px rgba(0,0,0,.4) inset;
+  .layer-nav::-webkit-scrollbar{ display:none; }
+  .layer-tab{
+    flex:1 0 auto; min-width:64px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:3px; background:none; border:none; color:var(--ink-dim); cursor:pointer;
+    font-family:'JetBrains Mono', monospace; font-size:.56rem; letter-spacing:.04em;
+    padding:6px 8px; transition:color .2s ease;
   }
-  .pager button{
-    background:none; border:none; font-size:1.3rem; color:var(--navy); cursor:pointer; padding:8px;
-    transition: transform .15s ease;
-  }
-  .pager button:hover:not(:disabled){ transform:scale(1.15); }
-  .pager button:disabled{ opacity:.25; cursor:default; }
-  .pager button:focus-visible{ outline:2px solid var(--stamp); border-radius:4px; }
-  .dots{ display:flex; gap:7px; }
-  .dot{ width:6px; height:6px; border-radius:50%; background:var(--paper-deep); transition:background .2s ease, transform .2s ease; }
-  .dot.on{ background:var(--stamp); transform:scale(1.4); }
+  .layer-tab i{ font-size:1.05rem; transition:transform .2s var(--ease-spring); }
+  .layer-tab.active{ color:var(--amber); }
+  .layer-tab.active i{ transform:translateY(-2px); }
+  .layer-tab:focus-visible{ outline:2px solid var(--teal); outline-offset:-2px; }
 
   /* ---------- QR modal ---------- */
   .qr-modal{
     position:fixed; inset:0; z-index:20; display:none; align-items:center; justify-content:center;
-    background:rgba(11,26,41,.72); backdrop-filter:blur(3px);
+    background:rgba(5,15,26,.8); backdrop-filter:blur(3px);
   }
   .qr-modal.open{ display:flex; animation:fadeIn .25s ease; }
   @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
   .qr-box{
-    background:var(--paper); padding:26px 28px 22px; border-radius:10px; text-align:center;
-    width:min(280px, 80vw); box-shadow:0 24px 60px rgba(0,0,0,.45);
+    background:var(--navy); border:1px solid rgba(71,101,133,.25); padding:26px 28px 22px; border-radius:3px; text-align:center;
+    width:min(280px, 80vw); box-shadow:0 24px 60px rgba(0,0,0,.5);
     transform:scale(.9); animation:pop .32s var(--ease-spring) forwards;
   }
   @keyframes pop{ to{ transform:scale(1); } }
-  .qr-box h3{ font-size:1rem; margin-bottom:14px; }
-  .qr-box img{ width:170px; height:170px; border-radius:4px; border:6px solid #fff; box-shadow:0 6px 16px rgba(0,0,0,.25); }
-  .qr-box p{ font-size:.68rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft); margin:12px 0 16px; }
+  .qr-box h3{ font-size:.98rem; margin-bottom:14px; }
+  .qr-box img{ width:170px; height:170px; border-radius:2px; border:6px solid #fff; }
+  .qr-box p{ font-size:.66rem; font-family:'JetBrains Mono', monospace; color:var(--ink-dim); margin:12px 0 16px; }
   .qr-box button{
-    background:var(--navy); color:#fff; border:none; padding:9px 18px; border-radius:5px;
-    font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:.78rem; cursor:pointer;
-    transition: transform .15s ease;
+    background:var(--amber); color:var(--navy-deep); border:none; padding:9px 18px; border-radius:2px;
+    font-family:'Inter', sans-serif; font-weight:600; font-size:.76rem; cursor:pointer;
+    transition:transform .15s ease;
   }
   .qr-box button:hover{ transform:translateY(-2px); }
 
-  @media (min-width:431px){
-    .rig{ height:min(92dvh, 880px); }
-    .book-wrap{ border-radius:10px; overflow:visible; }
-    .book{ border-radius:10px; }
+  @media (prefers-reduced-motion: reduce){
+    .sheet{ transition:opacity .3s ease; }
+    .compass .ring, .compass .ring2, .scan{ animation:none !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="grid-bg" aria-hidden="true"></div>
-<div class="plan-bg" aria-hidden="true"></div>
-<div class="spot-bg" id="spotBg" aria-hidden="true"></div>
-<div class="motes" id="motes" aria-hidden="true"></div>
+<div class="grid-fine" aria-hidden="true"></div>
+<div class="grid-bold" aria-hidden="true"></div>
+<div class="scan" aria-hidden="true"></div>
+<div class="crosshair-x" id="chX"></div>
+<div class="crosshair-y" id="chY"></div>
+<div class="coord-readout" id="coord">X 000 Y 000</div>
 
-<div class="rig">
-  <div class="book-wrap">
-    <div class="book" id="book">
+<div class="wrap">
 
-      <div class="tabs" role="tablist" aria-label="Portfolio sections">
-        <button class="tab active" data-page="cover" role="tab" aria-selected="true">COVER</button>
-        <button class="tab" data-page="profile" role="tab" aria-selected="false">PROFILE</button>
-        <button class="tab" data-page="experience" role="tab" aria-selected="false">EXP</button>
-        <button class="tab" data-page="education" role="tab" aria-selected="false">EDU/SKL</button>
-        <button class="tab" data-page="projects" role="tab" aria-selected="false">PROJECTS</button>
-        <button class="tab" data-page="contact" role="tab" aria-selected="false">CONTACT</button>
-      </div>
-
-      <!-- COVER -->
-      <section class="page active" data-page="cover">
-        <div class="stamp" data-code="TA · COVER"></div>
-        <div class="doc-head"><span class="live">FILE NO. TA-2026</span><span>STATUS: ACTIVE</span></div>
-        <div class="cover-center">
-          <div class="badge-wrap">
-            <div class="badge" id="badge">
-              <img src="mypic.png" alt="Tanveer Ahmad">
-              <span class="cap">Site Photo ID</span>
-            </div>
-          </div>
-          <h1>Tanveer Ahmad</h1>
-          <h3>Document Controller &nbsp;·&nbsp; Subcontractor Invoicing &amp; Systems &nbsp;·&nbsp; Software Engineer</h3>
-          <p class="tagline" id="tagline"></p>
-          <div class="chip-row">
-            <span class="chip">6+ YRS EXP</span>
-            <span class="chip">PK ⇄ KSA</span>
-            <span class="chip">SPMS DEVELOPER</span>
-            <span class="chip">UR · EN · AR</span>
-          </div>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="Tanveer Ahmad.pdf" download><i class='bx bx-download'></i>Download CV</a>
-            <button class="btn btn-ghost" data-goto="contact"><i class='bx bx-envelope'></i>Contact</button>
-          </div>
-          <div class="hint"><i class='bx bx-chevrons-right'></i> Swipe or tap a tab to open the file</div>
-        </div>
-      </section>
-
-      <!-- PROFILE -->
-      <section class="page" data-page="profile">
-        <div class="stamp" data-code="TA · PROFILE"></div>
-        <div class="doc-head"><span>PROFILE</span><span>DOC-ID: TA/PRO</span></div>
-        <h2>Summary</h2>
-        <p class="summary">A motivated and reliable Document Controller with proven expertise in document management systems, subcontractor invoice processing, project reporting and data control within fast-paced construction environments. Skilled in designing document control systems and building web-based applications to simplify invoice tracking — alongside supporting HR operations, general administration and official correspondence. A Software Engineering background feeds a growing focus on automating the paperwork itself.</p>
-
-        <div class="subhead">Currently</div>
-        <div class="now-card">
-          <b>Document Controller — Subcontractor Invoicing, Systems &amp; HR</b>
-          Nam Arabia Co., Saudi Arabia (Nov 2025 – present)
-        </div>
-
-        <div class="subhead">Highlights</div>
-        <ul class="tick reveal">
-          <li>Designed and developed the Subcontractor Payment Management System (SPMS) to control and track invoices and payment status.</li>
-          <li>Built a web-based application to record and manage subcontractor invoices digitally.</li>
-          <li>Streamlined document control systems and workflows to improve accuracy and speed.</li>
-          <li>Support HR activities, general administration and day-to-day email correspondence.</li>
-        </ul>
-
-        <div class="subhead">Languages</div>
-        <div class="lang-row">
-          <div class="lang-item"><b>Urdu</b> — Native</div>
-          <div class="lang-item"><b>English</b> — Fluent</div>
-          <div class="lang-item"><b>Arabic</b> — Basic</div>
-        </div>
-      </section>
-
-      <!-- EXPERIENCE -->
-      <section class="page" data-page="experience">
-        <div class="stamp" data-code="TA · EXPERIENCE"></div>
-        <div class="doc-head"><span>WORK HISTORY</span><span>DOC-ID: TA/EXP</span></div>
-        <div class="tl">
-          <div class="tl-item reveal">
-            <span class="now-pill">CURRENT</span>
-            <span class="tl-tag">NOV 2025 – PRESENT · SAUDI ARABIA</span>
-            <h4>Document Controller — Subcontractor Invoicing, Systems &amp; HR</h4>
-            <p><b>Nam Arabia Co.</b></p>
-            <p>Handle and process all subcontractor invoices, ensuring accuracy, backup and timely approval.</p>
-            <p>Designed and developed the SPMS to control and track subcontractor invoices and payment status.</p>
-            <p>Built a web-based application to record, organise and manage subcontractor invoices digitally.</p>
-            <p>Perform HR-related activities, assist with general administration, and manage email correspondence.</p>
-          </div>
-          <div class="tl-item reveal">
-            <span class="tl-tag">OCT 2024 – OCT 2025 · SAUDI ARABIA</span>
-            <h4>Site Document Controller — Nam Arabia Co.</h4>
-            <p>Managed and controlled all project documents, drawings and invoices.</p>
-            <p>Reviewed submittals before consultant issue and tracked revisions so the latest version was always on site.</p>
-            <p>Designed document control systems to make workflows easier and more efficient.</p>
-            <p>Prepared daily, weekly and monthly progress reports for management.</p>
-          </div>
-          <div class="tl-item reveal">
-            <span class="tl-tag">2019 – 2024 · PAKISTAN</span>
-            <h4>Document Controller — Silver Contracting Co.</h4>
-            <p>Maintained records for material delivery notes, requests and approvals.</p>
-            <p>Managed warehouse and site documentation, tracking material movement against daily/weekly stock reports.</p>
-            <p>Ensured proper labelling, numbering and archiving for fast retrieval.</p>
-          </div>
-          <div class="tl-item reveal">
-            <span class="tl-tag">2021 – 2024 · PAKISTAN</span>
-            <h4>Team Leader — Riphah University</h4>
-            <p>Organised academic and technical documents and supported digital record management.</p>
-            <p>Assisted faculty with IT and documentation tasks across workshops and projects.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- EDUCATION & SKILLS -->
-      <section class="page" data-page="education">
-        <div class="stamp" data-code="TA · EDU/SKL"></div>
-        <div class="doc-head"><span>EDUCATION &amp; SKILLS</span><span>DOC-ID: TA/EDU</span></div>
-
-        <div class="subhead">Education</div>
-        <div class="edu-card">
-          <b>BS Software Engineering</b>
-          <span>Riphah International University (RIU) · 2024</span>
-        </div>
-        <div class="edu-card">
-          <b>FSc Pre-Engineering</b>
-          <span>PGCS, Faisalabad · 2019</span>
-        </div>
-
-        <div class="subhead">Certifications</div>
-        <div class="tags">
-          <span class="tag">Document Control &amp; Office Mgmt Training</span>
-          <span class="tag">MS Office &amp; Data Management</span>
-          <span class="tag">Personality Grooming Certificate</span>
-        </div>
-
-        <div class="subhead">Proficiency</div>
-        <div class="meter reveal" style="--pct:92%">
-          <div class="lbl"><span>Document Control Systems</span><span>92%</span></div>
-          <div class="bar"><div class="fill"></div></div>
-        </div>
-        <div class="meter reveal" style="--pct:85%">
-          <div class="lbl"><span>Subcontractor Invoicing</span><span>85%</span></div>
-          <div class="bar"><div class="fill"></div></div>
-        </div>
-        <div class="meter reveal" style="--pct:78%">
-          <div class="lbl"><span>Systems &amp; Web App Development</span><span>78%</span></div>
-          <div class="bar"><div class="fill"></div></div>
-        </div>
-        <div class="meter reveal" style="--pct:70%">
-          <div class="lbl"><span>HR &amp; Administration Support</span><span>70%</span></div>
-          <div class="bar"><div class="fill"></div></div>
-        </div>
-
-        <div class="subhead">Document control</div>
-        <div class="tags">
-          <span class="tag">Submittals</span><span class="tag">RFIs</span><span class="tag">WIRs</span>
-          <span class="tag">MIRs</span><span class="tag">Transmittals</span><span class="tag">Revision tracking</span>
-        </div>
-
-        <div class="subhead">Commercial</div>
-        <div class="tags">
-          <span class="tag">Subcontractor invoicing</span><span class="tag">Invoice verification</span><span class="tag">IPC tracking</span><span class="tag">Payment certificates</span>
-        </div>
-
-        <div class="subhead">Software &amp; tools</div>
-        <div class="tags">
-          <span class="tag">Excel (Advanced)</span><span class="tag">SharePoint</span><span class="tag">Adobe Acrobat</span>
-          <span class="tag">HTML/CSS/JS</span><span class="tag">Firebase</span><span class="tag">Java · Android</span>
-        </div>
-      </section>
-
-      <!-- PROJECTS -->
-      <section class="page" data-page="projects">
-        <div class="stamp" data-code="TA · PROJECTS"></div>
-        <div class="doc-head"><span>PROJECTS</span><span>DOC-ID: TA/PRJ</span></div>
-
-        <div class="proj reveal">
-          <span class="tl-tag">FIREBASE · MULTI-ROLE SYSTEM</span>
-          <h4>Subcontractor Payment Management System (SPMS)</h4>
-          <p>A custom platform for construction payment workflows: admin, finance, management, end-user and viewer panels, with approval workflow, PDF generation and dashboard analytics on a real-time Firebase backend.</p>
-        </div>
-
-        <div class="proj reveal">
-          <span class="tl-tag">WEB APP · INVOICE RECORDS</span>
-          <h4>Subcontractor Invoice Web App</h4>
-          <p>A web-based application built to record, organise and track subcontractor invoices digitally — replacing manual logs with a searchable, always up-to-date system.</p>
-        </div>
-
-        <div class="proj reveal">
-          <span class="tl-tag">FINAL YEAR PROJECT · ANDROID</span>
-          <h4>Donation App</h4>
-          <p>An Android application connecting donors with organisations, built for transparent, accessible donation management on mobile.</p>
-        </div>
-
-        <div class="proj reveal">
-          <span class="tl-tag">QR-BASED PORTFOLIO</span>
-          <h4>This portfolio, scanned into being</h4>
-          <p>A document-control-styled dossier, built to open straight from a QR scan — the file you're reading right now.</p>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="page" data-page="contact">
-        <div class="stamp" data-code="TA · CONTACT"></div>
-        <div class="doc-head"><span>CONTACT</span><span>DOC-ID: TA/CTC</span></div>
-
-        <div class="contact-photo"><img src="mypic.png" alt="Tanveer Ahmad"></div>
-
-        <ul class="contact-list">
-          <li>
-            <a href="tel:+966504717535"><i class='bx bx-phone'></i>+966 50 471 7535</a>
-            <div class="contact-note">Call or WhatsApp</div>
-          </li>
-          <li>
-            <a href="mailto:mrtanveer2017@gmail.com"><i class='bx bx-envelope'></i>mrtanveer2017@gmail.com</a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener"><i class='bx bxl-linkedin'></i>Tanveer Ahmad — LinkedIn</a>
-          </li>
-          <li>
-            <a href="#"><i class='bx bx-map'></i>Jeddah, Saudi Arabia</a>
-          </li>
-        </ul>
-
-        <div class="btn-row" style="margin-top:8px;">
-          <a class="btn btn-primary" href="Tanveer Ahmad.pdf" download><i class='bx bx-download'></i>Download CV</a>
-          <button class="btn btn-ghost" id="openQR"><i class='bx bx-qr-scan'></i>Share via QR</button>
-        </div>
-      </section>
-
-    </div>
-
-    <div class="pager">
-      <button id="prevBtn" aria-label="Previous page"><i class='bx bx-chevron-left'></i></button>
-      <div class="dots" id="dots"></div>
-      <button id="nextBtn" aria-label="Next page"><i class='bx bx-chevron-right'></i></button>
-    </div>
+  <div class="top-strip">
+    <span><i class='bx bx-folder-open'></i> FILE TA-2026</span>
+    <span class="live">ACTIVE</span>
   </div>
+
+  <!-- COVER -->
+  <section class="sheet cover in" data-sheet="cover" id="cover">
+    <span class="sheet-no">01/06</span>
+    <div class="compass">
+      <div class="ring"></div>
+      <div class="ring2"></div>
+      <img src="mypic.png" alt="Tanveer Ahmad">
+    </div>
+    <h1>Tanveer Ahmad</h1>
+    <h3><i class='bx bx-shield-quarter' style="color:var(--teal); vertical-align:-2px; margin-right:5px;"></i>Document Controller · Subcontractor Invoicing &amp; Systems · Software Engineer</h3>
+    <p class="tagline" id="tagline"></p>
+    <div class="chip-row">
+      <span class="chip"><i class='bx bx-time-five'></i>6+ YRS EXP</span>
+      <span class="chip"><i class='bx bx-globe'></i>PK ⇄ KSA</span>
+      <span class="chip"><i class='bx bx-code-curly'></i>SPMS DEVELOPER</span>
+      <span class="chip"><i class='bx bx-conversation'></i>UR · EN · AR</span>
+    </div>
+    <div>
+      <button class="btn" data-goto="contact"><i class='bx bx-envelope'></i>Open contact sheet</button>
+    </div>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="sheet" data-sheet="profile" id="profile">
+    <span class="sheet-no">02/06</span>
+    <div class="sheet-label"><i class='bx bx-user-circle'></i>Profile</div>
+    <h2 style="font-size:1.15rem; margin-bottom:12px; display:flex; align-items:center; gap:8px;"><i class='bx bx-file' style="color:var(--amber); font-size:1rem;"></i>Summary</h2>
+    <p class="summary">A motivated and reliable Document Controller with proven expertise in document management systems, subcontractor invoice processing, project reporting and data control within fast-paced construction environments. Skilled in designing document control systems and building web-based applications to simplify invoice tracking - alongside supporting HR operations, general administration and official correspondence. A Software Engineering background feeds a growing focus on automating the paperwork itself.</p>
+
+    <div class="subhead"><i class='bx bx-broadcast'></i>Currently</div>
+    <div class="now-card">
+      <b><i class='bx bx-briefcase-alt-2'></i>Document Controller - Subcontractor Invoicing, Systems &amp; HR</b>
+      Nam Arabia Co., Saudi Arabia (Nov 2025 – present)
+    </div>
+
+    <div class="subhead"><i class='bx bx-star'></i>Highlights</div>
+    <ul class="tick">
+      <li><i class='bx bx-check-shield'></i>Designed and developed the Subcontractor Payment Management System (SPMS) to control and track invoices and payment status.</li>
+      <li><i class='bx bx-check-shield'></i>Built a web-based application to record and manage subcontractor invoices digitally.</li>
+      <li><i class='bx bx-check-shield'></i>Streamlined document control systems and workflows to improve accuracy and speed.</li>
+      <li><i class='bx bx-check-shield'></i>Support HR activities, general administration and day-to-day email correspondence.</li>
+    </ul>
+
+    <div class="subhead"><i class='bx bx-globe'></i>Languages</div>
+    <div class="lang-row">
+      <div class="lang-item"><i class='bx bx-message-square-detail'></i><b>Urdu</b> - Native</div>
+      <div class="lang-item"><i class='bx bx-message-square-detail'></i><b>English</b> - Fluent</div>
+      <div class="lang-item"><i class='bx bx-message-square-detail'></i><b>Arabic</b> - Basic</div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="sheet" data-sheet="experience" id="experience">
+    <span class="sheet-no">03/06</span>
+    <div class="sheet-label"><i class='bx bx-briefcase'></i>Work history</div>
+    <div class="span-label"><i class='bx bx-left-arrow-alt'></i>2019 - PRESENT · 6+ YR SPAN</div>
+    <div class="dl">
+      <div class="dl-item">
+        <span class="now-pill"><i class='bx bx-radio-circle-marked'></i>CURRENT</span>
+        <span class="dl-tag"><i class='bx bx-calendar'></i>NOV 2025 – PRESENT · SAUDI ARABIA</span>
+        <h4><i class='bx bx-briefcase-alt-2'></i>Document Controller - Subcontractor Invoicing, Systems &amp; HR</h4>
+        <p><b>Nam Arabia Co.</b></p>
+        <p>Handle and process all subcontractor invoices, ensuring accuracy, backup and timely approval.</p>
+        <p>Designed and developed the SPMS to control and track subcontractor invoices and payment status.</p>
+        <p>Built a web-based application to record, organise and manage subcontractor invoices digitally.</p>
+        <p>Perform HR-related activities, assist with general administration, and manage email correspondence.</p>
+      </div>
+      <div class="dl-item">
+        <span class="dl-tag"><i class='bx bx-calendar'></i>OCT 2024 – OCT 2025 · SAUDI ARABIA</span>
+        <h4><i class='bx bx-file-find'></i>Site Document Controller - Nam Arabia Co.</h4>
+        <p>Managed and controlled all project documents, drawings and invoices.</p>
+        <p>Reviewed submittals before consultant issue and tracked revisions so the latest version was always on site.</p>
+        <p>Designed document control systems to make workflows easier and more efficient.</p>
+        <p>Prepared daily, weekly and monthly progress reports for management.</p>
+      </div>
+      <div class="dl-item">
+        <span class="dl-tag"><i class='bx bx-calendar'></i>2019 – 2024 · PAKISTAN</span>
+        <h4><i class='bx bx-archive'></i>Document Controller - Silver Contracting Co.</h4>
+        <p>Maintained records for material delivery notes, requests and approvals.</p>
+        <p>Managed warehouse and site documentation, tracking material movement against daily/weekly stock reports.</p>
+        <p>Ensured proper labelling, numbering and archiving for fast retrieval.</p>
+      </div>
+      <div class="dl-item">
+        <span class="dl-tag"><i class='bx bx-calendar'></i>2021 – 2024 · PAKISTAN</span>
+        <h4><i class='bx bx-group'></i>Team Leader - Riphah University</h4>
+        <p>Organised academic and technical documents and supported digital record management.</p>
+        <p>Assisted faculty with IT and documentation tasks across workshops and projects.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION & SKILLS -->
+  <section class="sheet" data-sheet="education" id="education">
+    <span class="sheet-no">04/06</span>
+    <div class="sheet-label"><i class='bx bx-book-content'></i>Education &amp; skills</div>
+
+    <div class="subhead"><i class='bx bx-graduation'></i>Education</div>
+    <div class="edu-card">
+      <b><i class='bx bx-buildings'></i>BS Software Engineering</b>
+      <span>Riphah International University (RIU) · 2024</span>
+    </div>
+    <div class="edu-card">
+      <b><i class='bx bx-buildings'></i>FSc Pre-Engineering</b>
+      <span>PGCS, Faisalabad · 2019</span>
+    </div>
+
+    <div class="subhead"><i class='bx bx-certification'></i>Certifications</div>
+    <div class="tags">
+      <span class="tag"><i class='bx bxs-certification'></i>Document Control &amp; Office Mgmt Training</span>
+      <span class="tag"><i class='bx bxs-certification'></i>MS Office &amp; Data Management</span>
+      <span class="tag"><i class='bx bxs-certification'></i>Personality Grooming Certificate</span>
+    </div>
+
+    <div class="subhead"><i class='bx bx-bar-chart-alt-2'></i>Proficiency</div>
+    <div class="ruler" style="--pct:92%">
+      <div class="lbl"><span><i class='bx bx-folder'></i>Document Control Systems</span><span>92%</span></div>
+      <div class="track"><div class="fill"></div><div class="flag">▾</div></div>
+    </div>
+    <div class="ruler" style="--pct:85%">
+      <div class="lbl"><span><i class='bx bx-receipt'></i>Subcontractor Invoicing</span><span>85%</span></div>
+      <div class="track"><div class="fill"></div><div class="flag">▾</div></div>
+    </div>
+    <div class="ruler" style="--pct:78%">
+      <div class="lbl"><span><i class='bx bx-code-alt'></i>Systems &amp; Web App Development</span><span>78%</span></div>
+      <div class="track"><div class="fill"></div><div class="flag">▾</div></div>
+    </div>
+    <div class="ruler" style="--pct:70%">
+      <div class="lbl"><span><i class='bx bx-support'></i>HR &amp; Administration Support</span><span>70%</span></div>
+      <div class="track"><div class="fill"></div><div class="flag">▾</div></div>
+    </div>
+
+    <div class="subhead"><i class='bx bx-folder-open'></i>Document control</div>
+    <div class="tags">
+      <span class="tag"><i class='bx bx-file'></i>Submittals</span><span class="tag"><i class='bx bx-help-circle'></i>RFIs</span><span class="tag"><i class='bx bx-check-square'></i>WIRs</span>
+      <span class="tag"><i class='bx bx-clipboard'></i>MIRs</span><span class="tag"><i class='bx bx-send'></i>Transmittals</span><span class="tag"><i class='bx bx-history'></i>Revision tracking</span>
+    </div>
+
+    <div class="subhead"><i class='bx bx-dollar-circle'></i>Commercial</div>
+    <div class="tags">
+      <span class="tag"><i class='bx bx-receipt'></i>Subcontractor invoicing</span><span class="tag"><i class='bx bx-check-double'></i>Invoice verification</span><span class="tag"><i class='bx bx-line-chart'></i>IPC tracking</span><span class="tag"><i class='bx bx-award'></i>Payment certificates</span>
+    </div>
+
+    <div class="subhead"><i class='bx bx-code-curly'></i>Software &amp; tools</div>
+    <div class="tags">
+      <span class="tag"><i class='bx bx-table'></i>Excel (Advanced)</span><span class="tag"><i class='bx bxl-microsoft'></i>SharePoint</span><span class="tag"><i class='bx bxs-file-pdf'></i>Adobe Acrobat</span>
+      <span class="tag"><i class='bx bx-code-alt'></i>HTML/CSS/JS</span><span class="tag"><i class='bx bxs-data'></i>Firebase</span><span class="tag"><i class='bx bxl-android'></i>Java · Android</span>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="sheet" data-sheet="projects" id="projects">
+    <span class="sheet-no">05/06</span>
+    <div class="sheet-label"><i class='bx bx-folder-open'></i>Projects</div>
+
+    <div class="proj">
+      <span class="dl-tag"><i class='bx bxs-data'></i>FIREBASE · MULTI-ROLE SYSTEM</span>
+      <h4><i class='bx bx-money'></i>Subcontractor Payment Management System (SPMS)</h4>
+      <p>A custom platform for construction payment workflows: admin, finance, management, end-user and viewer panels, with approval workflow, PDF generation and dashboard analytics on a real-time Firebase backend.</p>
+    </div>
+
+    <div class="proj">
+      <span class="dl-tag"><i class='bx bx-globe'></i>WEB APP · INVOICE RECORDS</span>
+      <h4><i class='bx bx-receipt'></i>Subcontractor Invoice Web App</h4>
+      <p>A web-based application built to record, organise and track subcontractor invoices digitally - replacing manual logs with a searchable, always up-to-date system.</p>
+    </div>
+
+    <div class="proj">
+      <span class="dl-tag"><i class='bx bxl-android'></i>FINAL YEAR PROJECT · ANDROID</span>
+      <h4><i class='bx bx-heart'></i>Donation App</h4>
+      <p>An Android application connecting donors with organisations, built for transparent, accessible donation management on mobile.</p>
+    </div>
+
+    <div class="proj">
+      <span class="dl-tag"><i class='bx bx-qr-scan'></i>QR-LINKED PORTFOLIO</span>
+      <h4><i class='bx bx-file-blank'></i>This portfolio, drawn to scale</h4>
+      <p>A blueprint-styled site, laid out like a construction drawing sheet - built to open straight from a QR scan, the file you're reading right now.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="sheet" data-sheet="contact" id="contact">
+    <span class="sheet-no">06/06</span>
+    <div class="sheet-label"><i class='bx bx-id-card'></i>Contact</div>
+
+    <div class="contact-photo"><img src="mypic.png" alt="Tanveer Ahmad"></div>
+
+    <ul class="contact-list">
+      <li>
+        <div class="contact-note">Call or WhatsApp</div>
+        <a href="tel:+966504717535"><i class='bx bx-phone'></i>+966 50 471 7535</a>
+      </li>
+      <li>
+        <div class="contact-note">Via Email</div>
+        <a href="mailto:mrtanveer2017@gmail.com"><i class='bx bx-envelope'></i>mrtanveer2017@gmail.com</a>
+      </li>
+      <li>
+        <div class="contact-note">Via LinkedIn</div>
+        <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener"><i class='bx bxl-linkedin'></i>Tanveer Ahmad - LinkedIn</a>
+      </li>
+      <li>
+        <div class="contact-note">Address</div>
+        <a href="#"><i class='bx bx-map'></i>Jeddah, Saudi Arabia</a>
+      </li>
+    </ul>
+
+    <div style="margin-top:8px;">
+      <button class="btn" id="openQR"><i class='bx bx-qr-scan'></i>Share via QR</button>
+    </div>
+  </section>
+
 </div>
+
+<div class="title-strip" id="titleStrip">SHEET <b id="tsSheet">01/06</b> · REV <b id="tsRev">01</b> · SCALE NTS · DRAWN T.AHMAD</div>
+<nav class="layer-nav" id="layerNav" aria-label="Sections">
+  <button class="layer-tab active" data-goto="cover"><i class='bx bx-scan'></i>COVER</button>
+  <button class="layer-tab" data-goto="profile"><i class='bx bx-user-circle'></i>PROFILE</button>
+  <button class="layer-tab" data-goto="experience"><i class='bx bx-briefcase'></i>EXP</button>
+  <button class="layer-tab" data-goto="education"><i class='bx bx-graduation'></i>EDU/SKL</button>
+  <button class="layer-tab" data-goto="projects"><i class='bx bx-folder-open'></i>PROJ</button>
+  <button class="layer-tab" data-goto="contact"><i class='bx bx-id-card'></i>CONTACT</button>
+</nav>
 
 <div class="qr-modal" id="qrModal">
   <div class="qr-box">
@@ -712,88 +605,45 @@
 <script>
 (function(){
   var order = ['cover','profile','experience','education','projects','contact'];
-  var pages = {};
-  var tabs = {};
+  var sections = {}; var tabs = {};
   order.forEach(function(k){
-    pages[k] = document.querySelector('.page[data-page="'+k+'"]');
-    tabs[k]  = document.querySelector('.tab[data-page="'+k+'"]');
+    sections[k] = document.getElementById(k);
+    tabs[k] = document.querySelector('.layer-tab[data-goto="'+k+'"]');
   });
-  var current = 0;
-  var visits = {};
+  var visits = {}; var current = 'cover';
+  var tsSheet = document.getElementById('tsSheet');
+  var tsRev = document.getElementById('tsRev');
 
-  var dotsWrap = document.getElementById('dots');
-  order.forEach(function(k, i){
-    var d = document.createElement('span');
-    d.className = 'dot' + (i===0 ? ' on' : '');
-    dotsWrap.appendChild(d);
-  });
-  var dots = dotsWrap.querySelectorAll('.dot');
-
-  function stampFor(key){ return pages[key].querySelector('.stamp'); }
-
-  function fireStamp(key){
-    var s = stampFor(key);
-    if(!s) return;
+  function setActive(key){
+    if(key === current) return;
+    current = key;
+    order.forEach(function(k){ tabs[k].classList.toggle('active', k===key); });
+    var idx = order.indexOf(key);
     visits[key] = (visits[key]||0) + 1;
-    var rev = String(visits[key]).padStart(2,'0');
-    s.textContent = (s.getAttribute('data-code') || '') + '\nREV. ' + rev;
-    s.classList.remove('pop');
-    void s.offsetWidth;
-    s.classList.add('pop');
+    tsSheet.textContent = String(idx+1).padStart(2,'0') + '/06';
+    tsRev.textContent = String(visits[key]).padStart(2,'0');
   }
 
-  function goTo(index){
-    if(index === current || index < 0 || index >= order.length) return;
-    var fromKey = order[current];
-    var toKey = order[index];
-
-    pages[fromKey].classList.remove('active');
-    pages[toKey].classList.add('active');
-
-    tabs[fromKey].classList.remove('active');
-    tabs[fromKey].setAttribute('aria-selected','false');
-    tabs[toKey].classList.add('active');
-    tabs[toKey].setAttribute('aria-selected','true');
-
-    dots[current].classList.remove('on');
-    dots[index].classList.add('on');
-
-    current = index;
-    fireStamp(toKey);
-    updateButtons();
-    revealObserver.disconnect();
-    pages[toKey].querySelectorAll('.reveal, .tl-item, .meter').forEach(function(el){ revealObserver.observe(el); });
-  }
-
-  function updateButtons(){
-    document.getElementById('prevBtn').disabled = current === 0;
-    document.getElementById('nextBtn').disabled = current === order.length - 1;
-  }
-
-  order.forEach(function(k, i){ tabs[k].addEventListener('click', function(){ goTo(i); }); });
-  document.getElementById('prevBtn').addEventListener('click', function(){ goTo(current-1); });
-  document.getElementById('nextBtn').addEventListener('click', function(){ goTo(current+1); });
   document.querySelectorAll('[data-goto]').forEach(function(btn){
-    btn.addEventListener('click', function(){ goTo(order.indexOf(btn.getAttribute('data-goto'))); });
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'ArrowRight') goTo(current+1);
-    if(e.key === 'ArrowLeft') goTo(current-1);
+    btn.addEventListener('click', function(){
+      var key = btn.getAttribute('data-goto');
+      sections[key].scrollIntoView({behavior:'smooth', block:'start'});
+    });
   });
 
-  /* swipe */
-  var touchStartX = 0, touchStartY = 0;
-  var book = document.getElementById('book');
-  book.addEventListener('touchstart', function(e){
-    touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
-  }, {passive:true});
-  book.addEventListener('touchend', function(e){
-    var dx = e.changedTouches[0].clientX - touchStartX;
-    var dy = e.changedTouches[0].clientY - touchStartY;
-    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)){
-      if(dx < 0) goTo(current+1); else goTo(current-1);
-    }
-  }, {passive:true});
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting) en.target.classList.add('in');
+    });
+  }, { threshold:.15 });
+  document.querySelectorAll('.sheet, .ruler').forEach(function(el){ revealObserver.observe(el); });
+
+  var activeObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting) setActive(en.target.id);
+    });
+  }, { threshold:.5, rootMargin:'-40% 0px -40% 0px' });
+  order.forEach(function(k){ activeObserver.observe(sections[k]); });
 
   /* QR modal */
   var modal = document.getElementById('qrModal');
@@ -801,50 +651,18 @@
   document.getElementById('closeQR').addEventListener('click', function(){ modal.classList.remove('open'); });
   modal.addEventListener('click', function(e){ if(e.target === modal) modal.classList.remove('open'); });
 
-  /* button ripple */
-  document.querySelectorAll('.btn').forEach(function(btn){
-    btn.addEventListener('click', function(e){
-      var r = document.createElement('span');
-      r.className = 'ripple';
-      var rect = btn.getBoundingClientRect();
-      r.style.left = (e.clientX - rect.left - 6) + 'px';
-      r.style.top = (e.clientY - rect.top - 6) + 'px';
-      r.style.width = r.style.height = '12px';
-      btn.appendChild(r);
-      setTimeout(function(){ r.remove(); }, 600);
-    });
-  });
-
-  /* badge 3D tilt */
-  var badge = document.getElementById('badge');
-  badge.addEventListener('mousemove', function(e){
-    var r = badge.getBoundingClientRect();
-    var px = (e.clientX - r.left)/r.width - .5;
-    var py = (e.clientY - r.top)/r.height - .5;
-    badge.style.transform = 'rotateY('+(px*22)+'deg) rotateX('+(-py*22)+'deg) scale(1.05)';
-  });
-  badge.addEventListener('mouseleave', function(){ badge.style.transform = ''; });
-
-  /* ambient pointer spotlight */
-  var spot = document.getElementById('spotBg');
+  /* crosshair + coordinate readout */
+  var chX = document.getElementById('chX'), chY = document.getElementById('chY'), coord = document.getElementById('coord');
   window.addEventListener('pointermove', function(e){
-    spot.style.setProperty('--mx', e.clientX + 'px');
-    spot.style.setProperty('--my', e.clientY + 'px');
+    chX.style.left = e.clientX + 'px';
+    chY.style.top = e.clientY + 'px';
+    coord.style.left = e.clientX + 'px';
+    coord.style.top = e.clientY + 'px';
+    coord.textContent = 'X ' + String(e.clientX).padStart(3,'0') + '  Y ' + String(e.clientY).padStart(3,'0');
   }, {passive:true});
 
-  /* dust motes */
-  var motes = document.getElementById('motes');
-  for(var i=0;i<16;i++){
-    var m = document.createElement('span');
-    m.style.left = (Math.random()*100) + '%';
-    m.style.animationDuration = (10 + Math.random()*14) + 's';
-    m.style.animationDelay = (Math.random()*14) + 's';
-    m.style.opacity = .3 + Math.random()*.4;
-    motes.appendChild(m);
-  }
-
   /* typewriter tagline */
-  var taglineText = "Six years keeping construction paperwork \u2014 submittals, invoices, subcontractor payments \u2014 moving cleanly between site, consultant and client, across Pakistan and Saudi Arabia.";
+  var taglineText = "Six years keeping construction paperwork - submittals, invoices, subcontractor payments - moving cleanly between site, consultant and client, across Pakistan and Saudi Arabia.";
   var tEl = document.getElementById('tagline');
   var ti = 0;
   tEl.classList.add('typing');
@@ -854,20 +672,9 @@
     if(ti <= taglineText.length){ setTimeout(typeStep, 14); }
     else { tEl.classList.remove('typing'); }
   }
-  setTimeout(typeStep, 900);
+  setTimeout(typeStep, 700);
 
-  /* scroll-reveal + progress bars, re-triggerable per page view */
-  var revealObserver = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if(en.isIntersecting){
-        en.target.classList.add('in');
-      }
-    });
-  }, { root: null, threshold:.2 });
-  pages.cover.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
-
-  fireStamp('cover');
-  updateButtons();
+  setActive('cover');
 })();
 </script>
 </body>
